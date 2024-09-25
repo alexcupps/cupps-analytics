@@ -10,7 +10,7 @@ class PlayerSpider(scrapy.Spider):
     custom_settings = get_custom_settings()
 
     # Define the years to iterate over
-    years = list(range(2000, 2023 + 1))  # From 2000 to 2023 inclusive
+    years = list(range(2018, 2020 + 1))  # From 2000 to 2023 inclusive
 
     def __init__(self, *args, **kwargs):
         super(PlayerSpider, self).__init__(*args, **kwargs)
@@ -112,7 +112,7 @@ class PlayerSpider(scrapy.Spider):
             # Check if the player already exists in the database using the name and url_id
             self.db_util.cursor.execute("""
                 SELECT player_id FROM player WHERE name = %s AND sr_id = %s
-                """, (player_name, player_url_id))
+            """, (player_name, player_url_id))
     
             player_row = self.db_util.cursor.fetchone()
 
@@ -134,6 +134,7 @@ class PlayerSpider(scrapy.Spider):
                     weight = int(weight_text.replace('lb', '').strip())
                 else:
                     weight = None
+
                 # Insert player into player table
                 self.db_util.cursor.execute("""
                     INSERT INTO player (name, position, height, weight, sr_id)
@@ -145,10 +146,12 @@ class PlayerSpider(scrapy.Spider):
                 player_id = self.db_util.cursor.lastrowid
 
                 logging.info(f"Added {player_name} - {player_position} - {height_in_inches} - {weight} to player table")
-
             else:
+                player_id = player_row[0]  # Retrieve existing player ID
                 logging.info(f"{player_name} already exists in the DB. Not adding a duplicate row.")
+
             # Parse the player's year stats
+            logging.info(f"parsing stats for {player_name} - {player_id} - {team_id} - {year}")
             self.parse_player_stats(response, player_id, team_id, year)
 
     def parse_player_stats(self, response, player_id, team_id, year):
@@ -167,35 +170,39 @@ class PlayerSpider(scrapy.Spider):
             logging.info(f"No stats found for player_id: {player_id} in the year {year}")
             return
         
-        logging.info(f"Found stats for player_id: {player_id}, year: {year}")
-        
-        # Extract player stats for the specific year
-        player_class = row.xpath('.//td[@data-stat="class"]/text()').get(default='')
-        games_played = row.xpath('.//td[@data-stat="g"]/text()').get(default=0)
-        receptions = row.xpath('.//td[@data-stat="rec"]/text()').get(default=0)
-        rec_yds = row.xpath('.//td[@data-stat="rec_yds"]/text()').get(default=0)
-        rec_td = row.xpath('.//td[@data-stat="rec_td"]/text()').get(default=0)
-        rush_att = row.xpath('.//td[@data-stat="rush_att"]/text()').get(default=0)
-        rush_yds = row.xpath('.//td[@data-stat="rush_yds"]/text()').get(default=0)
-        rush_td = row.xpath('.//td[@data-stat="rush_td"]/text()').get(default=0)
-        
-        # Insert into player_year_stats table
+        # Check if stats already exist for player/year combo
         self.db_util.cursor.execute("""
-            INSERT INTO player_year_stats (
-                player_id, team_id, year, games_played, rec_yds, receptions, 
-                rush_yds, rush_att, rush_td, rec_td, class
-            )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """, (player_id, team_id, year, games_played, rec_yds, receptions, rush_yds, rush_att, rush_td, rec_td, player_class))
+            SELECT COUNT(*) FROM player_year_stats WHERE player_id = %s AND year = %s
+        """, (player_id, year))
 
-        # Commit the transaction after inserting the stats
-        self.db_util.conn.commit()
+        if self.db_util.cursor.fetchone()[0] == 0:
+            # Extract player stats for the specific year
+            player_class = row.xpath('.//td[@data-stat="class"]/text()').get(default='')
+            games_played = row.xpath('.//td[@data-stat="g"]/text()').get(default=0)
+            receptions = row.xpath('.//td[@data-stat="rec"]/text()').get(default=0)
+            rec_yds = row.xpath('.//td[@data-stat="rec_yds"]/text()').get(default=0)
+            rec_td = row.xpath('.//td[@data-stat="rec_td"]/text()').get(default=0)
+            rush_att = row.xpath('.//td[@data-stat="rush_att"]/text()').get(default=0)
+            rush_yds = row.xpath('.//td[@data-stat="rush_yds"]/text()').get(default=0)
+            rush_td = row.xpath('.//td[@data-stat="rush_td"]/text()').get(default=0)
 
-        # Log the successful insertion
-        logging.info(f"Successfully added stats for player_id: {player_id}, year: {year}, team_id: {team_id}, "
-                    f"class: {player_class}, games: {games_played}, receptions: {receptions}, receiving yards: {rec_yds}, "
-                    f"rushing yards: {rush_yds}, rush attempts: {rush_att}, rushing touchdowns: {rush_td}, "
-                    f"receiving touchdowns: {rec_td}")
+            # Insert into player_year_stats table
+            self.db_util.cursor.execute("""
+                INSERT INTO player_year_stats (
+                    player_id, team_id, year, games_played, rec_yds, receptions, 
+                    rush_yds, rush_att, rush_td, rec_td, class
+                )
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (player_id, team_id, year, games_played, rec_yds, receptions, rush_yds, rush_att, rush_td, rec_td, player_class))
+
+            # Commit the transaction after inserting the stats
+            self.db_util.conn.commit()
+
+            # Log the successful insertion
+            logging.info(f"Successfully added stats for player_id: {player_id}, year: {year}, team_id: {team_id}, "
+                        f"class: {player_class}, games: {games_played}, receptions: {receptions}, receiving yards: {rec_yds}, "
+                        f"rushing yards: {rush_yds}, rush attempts: {rush_att}, rushing touchdowns: {rush_td}, "
+                        f"receiving touchdowns: {rec_td}")
 
 
 

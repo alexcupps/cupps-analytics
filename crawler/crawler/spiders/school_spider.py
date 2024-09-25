@@ -1,35 +1,20 @@
 import os
 import scrapy
 import mysql.connector
+from ..util.db_util import DatabaseUtility
+from ..util.crawler_settings import get_custom_settings
 
 class SchoolSpider(scrapy.Spider):
     name = 'school_spider'
     start_urls = ['https://www.sports-reference.com/cfb/schools/']
 
-    custom_settings = {
-        'DOWNLOAD_DELAY': 5,  # Wait 5 seconds between requests to avoid overloading the server
-        'CONCURRENT_REQUESTS': 1,  # Only send 1 request at a time
-        'AUTOTHROTTLE_ENABLED': True,
-        'AUTOTHROTTLE_START_DELAY': 3,  # Initial delay of 3 seconds between requests
-        'AUTOTHROTTLE_MAX_DELAY': 60,  # Maximum delay of 60 seconds between requests
-        'AUTOTHROTTLE_TARGET_CONCURRENCY': 0.5,  # Number of requests sent in parallel
-        'RETRY_ENABLED': True,  # Enable retrying on failed requests
-        'RETRY_TIMES': 5,  # Retry up to 5 times for failed requests
-        'RETRY_HTTP_CODES': [429],  # Retry on 429 error (rate-limited)
-        'ROBOTSTXT_OBEY': True,  # Obey robots.txt rules
-        'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',  # Set custom user-agent to mimic a browser
-        'AUTOTHROTTLE_DEBUG': False,  # Disable debugging of the AutoThrottle feature
-    }
+    custom_settings = get_custom_settings()
 
-    # Initialize the MySQL connection (adjust the credentials as needed)
-    def __init__(self):
-        self.conn = mysql.connector.connect(
-            host=os.getenv('DB_HOST'),
-            user=os.getenv('DB_USER'),
-            password=os.getenv('DB_PASSWORD'),
-            database=os.getenv('DB_NAME')
-        )
-        self.cursor = self.conn.cursor()
+
+    def __init__(self, *args, **kwargs):
+        super(SchoolSpider, self).__init__(*args, **kwargs)
+        # Initialize the database connection using the utility class
+        self.db_util = DatabaseUtility()
 
     def parse(self, response):
         # Loop through each school row in the table
@@ -71,6 +56,5 @@ class SchoolSpider(scrapy.Spider):
             self.conn.rollback()
 
     def closed(self, reason):
-        # Close the MySQL connection when the spider finishes
-        self.cursor.close()
-        self.conn.close()
+        # Close the database connection when the spider finishes
+        self.db_util.close_connection()
