@@ -1,7 +1,7 @@
 import scrapy
 import logging
 from ..util.db_util import DatabaseUtility
-from ..util.crawler_settings import get_custom_settings
+from ..util.crawler_util import get_custom_settings
 from urllib.parse import quote_plus
 import re
 
@@ -10,27 +10,25 @@ class PlayerSpider(scrapy.Spider):
     custom_settings = get_custom_settings()
 
     # Define the years to iterate over
-    years = list(range(2018, 2020 + 1))  # From 2000 to 2023 inclusive
+    years = list(range(2000, 2023 + 1))  # From 2000 to 2023 inclusive
 
     def __init__(self, *args, **kwargs):
         super(PlayerSpider, self).__init__(*args, **kwargs)
         # Initialize the database connection using the utility class
-        self.db_util = DatabaseUtility()
+        self.db_util = DatabaseUtility(dictionary=False)
 
     def start_requests(self):
         # Fetch all schools from the database
-        self.db_util.cursor.execute("SELECT team_id, team_name FROM team")
+        self.db_util.cursor.execute("SELECT team_id, team_name, sr_name FROM team")
         schools = self.db_util.cursor.fetchall()
 
         logging.info(f"Number of schools fetched: {len(schools)}")
 
         for year in self.years:
             for school in schools:
-                team_id, team_name = school
+                team_id, team_name, sr_name = school
 
-                # Handle multiple-word schools by replacing spaces with dashes
-                school_url_part = quote_plus(team_name.lower().replace(' ', '-'))
-                url = f"https://www.sports-reference.com/cfb/schools/{school_url_part}/{year}.html"
+                url = f"https://www.sports-reference.com/cfb/schools/{sr_name}/{year}.html"
                 
                 logging.info(f"School URL: {url}")
                 
@@ -47,19 +45,40 @@ class PlayerSpider(scrapy.Spider):
             team_id = response.meta['team_id']
             year = response.meta['year']
 
-            # Try to find the table in the normal HTML first
-            rows = response.xpath('//table[@id="rushing_and_receiving"]//tbody/tr')
+            # Try the new selector first
+            rows = response.xpath('//table[@data-soc-sum-table-type="RushingReceivingStandard"]//tbody/tr')
+
+            if not rows:  # If no rows found with the new selector, fall back to the old selector
+                rows = response.xpath('//table[@id="rushing_and_receiving"]//tbody/tr')
 
             if rows:
                 logging.info(f"Found table in normal HTML. Number of rows found: {len(rows)}")
                 for row in rows:
-                    player_name = row.xpath('.//td[@data-stat="player"]/a/text()').get()
-                    player_url = row.xpath('.//td[@data-stat="player"]/a/@href').get()
+                    player_name = row.xpath('.//td[@data-stat="name_display"]/a/text()').get()
+                    player_url = row.xpath('.//td[@data-stat="name_display"]/a/@href').get()
+                    if player_url:
+                        player_page_url = response.urljoin(player_url)
+                        # logging.info(f"Player URL: {player_page_url}")
+                        # Go to the player page to fetch more detailed info
+                        yield scrapy.Request(player_page_url, callback=self.parse_player_page, meta={
+                            'player_name': player_name,                                
+                            'team_id': team_id,
+                            'year': year
+                            })
             else:
                 logging.info("Table not found in normal HTML. Searching in comments...")
 
                 # If the table is not found, search within the comments
-                players_table_html = response.xpath('//comment()').re_first(r'(?s)<!--.*?(<table[^>]+id="rushing_and_receiving".*?</table>).*?-->')
+                # Use the updated selector
+                players_table_html = response.xpath('//comment()').re_first(
+                    r'(?s)<!--.*?(<table[^>]+data-soc-sum-table-type="RushingReceivingStandard".*?</table>).*?-->'
+                )
+
+                # Fallback to the old selector if the new one returns nothing
+                if not players_table_html:
+                    players_table_html = response.xpath('//comment()').re_first(
+                        r'(?s)<!--.*?(<table[^>]+id="rushing_and_receiving".*?</table>).*?-->'
+                    )
 
                 if players_table_html:
                     # Use Scrapy's HTML parser to convert the extracted table HTML string back to a selector
@@ -69,8 +88,8 @@ class PlayerSpider(scrapy.Spider):
                     logging.info(f"Found table in comments. Number of rows found: {len(rows)}")
 
                     for row in rows:
-                        player_name = row.xpath('.//td[@data-stat="player"]/a/text()').get()
-                        player_url = row.xpath('.//td[@data-stat="player"]/a/@href').get()
+                        player_name = row.xpath('.//td[@data-stat="name_display"]/a/text()').get()
+                        player_url = row.xpath('.//td[@data-stat="name_display"]/a/@href').get()
 
                         # Log the player name and URL
                         # logging.info(f"Player Name: {player_name}")
@@ -97,17 +116,23 @@ class PlayerSpider(scrapy.Spider):
 
         logging.info(f"Inside parse_player_page for player {player_name} - {team_id} - {year}")
 
-        # Extract the position from the player page and clean it
-        player_position = response.xpath('normalize-space(//p[strong/text()="Position"]/text()[normalize-space()])').get().strip().replace(':', '').replace(' ', '')
+        # Extract player position
+        player_position_text = response.xpath('normalize-space(//p[strong/text()="Position"]/text()[normalize-space()])').get()
+        logging.info(f"Raw Player Position: {player_position_text}")
 
-        logging.info(f"Player position: {player_position}")
+        # Clean and split positions based on '/'
+        player_positions = player_position_text.strip().replace(':', '').replace(' ', '').split('/')
 
-        # Only proceed if the player is RB, WR, or TE
-        if player_position in ['RB', 'WR', 'TE']:
+        # Find the first match from the target positions
+        target_positions = ['RB', 'WR', 'TE']
+        player_position = next((pos for pos in player_positions if pos in target_positions), None)
 
-            # Extract the number from the player URL (e.g., '-3' from 'aj-brown-3')
-            # Using this ID helps us maintain unique rows for all players in the DB
-            player_url_id = int(re.search(r'-([0-9]+)\.html$', response.url).group(1))
+        logging.info(f"Saved Player Position: {player_position} (None = non-passcatcher)")
+
+        if player_position:
+            # Extract the substring from the player URL (e.g. 'aj-brown-3')
+            # Using this string helps us maintain unique rows for all players in the DB
+            player_url_id = re.search(r'/cfb/players/([a-zA-Z0-9-]+)\.html$', response.url).group(1)
 
             # Check if the player already exists in the database using the name and url_id
             self.db_util.cursor.execute("""
@@ -152,57 +177,76 @@ class PlayerSpider(scrapy.Spider):
 
             # Parse the player's year stats
             logging.info(f"parsing stats for {player_name} - {player_id} - {team_id} - {year}")
-            self.parse_player_stats(response, player_id, team_id, year)
+            self.parse_player_stats(response, player_id, team_id)
 
-    def parse_player_stats(self, response, player_id, team_id, year):
+    def parse_player_stats(self, response, player_id, team_id):
         # Find the table that contains the player's stats (either receiving or rushing)
-        table = response.xpath('//table[@id="receiving" or @id="rushing"]')
+        table = response.xpath('//table[contains(@class, "stats_table") and (contains(@id, "receiving") or contains(@id, "rushing"))]')
         
         # Check if the table exists
         if not table:
             logging.info(f"No stats table found for player_id: {player_id}, year: {year}")
             return
-        
-        # Find the specific row that matches the year we're looking for
-        row = table.xpath(f'//tbody/tr[.//th[@data-stat="year_id"]/a[text()="{year}"]]')
-        
-        if not row:
-            logging.info(f"No stats found for player_id: {player_id} in the year {year}")
-            return
-        
-        # Check if stats already exist for player/year combo
-        self.db_util.cursor.execute("""
-            SELECT COUNT(*) FROM player_year_stats WHERE player_id = %s AND year = %s
-        """, (player_id, year))
 
-        if self.db_util.cursor.fetchone()[0] == 0:
-            # Extract player stats for the specific year
-            player_class = row.xpath('.//td[@data-stat="class"]/text()').get(default='')
-            games_played = row.xpath('.//td[@data-stat="g"]/text()').get(default=0)
-            receptions = row.xpath('.//td[@data-stat="rec"]/text()').get(default=0)
-            rec_yds = row.xpath('.//td[@data-stat="rec_yds"]/text()').get(default=0)
-            rec_td = row.xpath('.//td[@data-stat="rec_td"]/text()').get(default=0)
-            rush_att = row.xpath('.//td[@data-stat="rush_att"]/text()').get(default=0)
-            rush_yds = row.xpath('.//td[@data-stat="rush_yds"]/text()').get(default=0)
-            rush_td = row.xpath('.//td[@data-stat="rush_td"]/text()').get(default=0)
+        # Iterate over all rows in the stats table
+        rows = table.xpath('//tbody/tr')
 
-            # Insert into player_year_stats table
+        for row in rows:
+            # Extract year from the row (important: now extracting the year from the table rows)
+            row_year = row.xpath('.//th[@data-stat="year_id"]/a/text()').get()
+            if not row_year:
+                continue  # Skip rows without a year
+
+            # Extract team name from the row
+            team_name = row.xpath('.//td[@data-stat="team_name_abbr"]/a/text()').get(default='')
+
+            # Fetch team ID based on team name (handle transfers)
             self.db_util.cursor.execute("""
-                INSERT INTO player_year_stats (
-                    player_id, team_id, year, games_played, rec_yds, receptions, 
-                    rush_yds, rush_att, rush_td, rec_td, class
-                )
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """, (player_id, team_id, year, games_played, rec_yds, receptions, rush_yds, rush_att, rush_td, rec_td, player_class))
+                SELECT team_id FROM team WHERE team_name = %s
+            """, (team_name,))
+            team_row = self.db_util.cursor.fetchone()
+            if not team_row:
+                logging.info(f"Team {team_name} not found in DB for player_id: {player_id}, year: {row_year}")
+                continue
 
-            # Commit the transaction after inserting the stats
-            self.db_util.conn.commit()
+            row_team_id = team_row[0]
 
-            # Log the successful insertion
-            logging.info(f"Successfully added stats for player_id: {player_id}, year: {year}, team_id: {team_id}, "
-                        f"class: {player_class}, games: {games_played}, receptions: {receptions}, receiving yards: {rec_yds}, "
-                        f"rushing yards: {rush_yds}, rush attempts: {rush_att}, rushing touchdowns: {rush_td}, "
-                        f"receiving touchdowns: {rec_td}")
+            # Extract stats for each year
+            # Using normalize-space to get text, whether it's in a <strong> or not
+            player_class = row.xpath('normalize-space(.//td[@data-stat="class"])').get(default='')
+            games_played = row.xpath('normalize-space(.//td[@data-stat="games"])').get(default=0)
+            receptions = row.xpath('normalize-space(.//td[@data-stat="rec"])').get(default=0)
+            rec_yds = row.xpath('normalize-space(.//td[@data-stat="rec_yds"])').get(default=0)
+            rec_td = row.xpath('normalize-space(.//td[@data-stat="rec_td"])').get(default=0)
+            rush_att = row.xpath('normalize-space(.//td[@data-stat="rush_att"])').get(default=0)
+            rush_yds = row.xpath('normalize-space(.//td[@data-stat="rush_yds"])').get(default=0)
+            rush_td = row.xpath('normalize-space(.//td[@data-stat="rush_td"])').get(default=0)
+
+            # Check if stats already exist for player/year combo
+            self.db_util.cursor.execute("""
+                SELECT COUNT(*) FROM player_year_stats WHERE player_id = %s AND year = %s
+            """, (player_id, row_year))
+
+            if self.db_util.cursor.fetchone()[0] == 0:
+                # Insert into player_year_stats table
+                self.db_util.cursor.execute("""
+                    INSERT INTO player_year_stats (
+                        player_id, team_id, year, class, games_played, rec_yds, receptions, 
+                        rush_yds, rush_att, rush_td, rec_td
+                    )
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """, (player_id, row_team_id, row_year, player_class, games_played, rec_yds, receptions, rush_yds, rush_att, rush_td, rec_td))
+
+                # Commit the transaction after inserting the stats
+                self.db_util.conn.commit()
+
+                # Log the successful insertion
+                logging.info(f"Successfully added stats for player_id: {player_id}, year: {row_year}, team_id: {row_team_id}, "
+                            f"class: {player_class}, games: {games_played}, receptions: {receptions}, receiving yards: {rec_yds}, "
+                            f"rushing yards: {rush_yds}, rush attempts: {rush_att}, rushing touchdowns: {rush_td}, "
+                            f"receiving touchdowns: {rec_td}")
+
+
 
 
 

@@ -2,7 +2,7 @@ import os
 import scrapy
 import mysql.connector
 from ..util.db_util import DatabaseUtility
-from ..util.crawler_settings import get_custom_settings
+from ..util.crawler_util import get_custom_settings
 
 class SchoolSpider(scrapy.Spider):
     name = 'school_spider'
@@ -13,7 +13,7 @@ class SchoolSpider(scrapy.Spider):
     def __init__(self, *args, **kwargs):
         super(SchoolSpider, self).__init__(*args, **kwargs)
         # Initialize the database connection using the utility class
-        self.db_util = DatabaseUtility()
+        self.db_util = DatabaseUtility(dictionary=False)
 
     def parse(self, response):
         # Loop through each school row in the table
