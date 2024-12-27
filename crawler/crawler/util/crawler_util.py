@@ -1,4 +1,5 @@
 import logging
+import re
 
 def get_custom_settings():
     return {
@@ -80,3 +81,31 @@ def convert_weight(weight_text):
         weight_in_lbs = None
 
     return weight_in_lbs
+
+def get_tprr(targets, routes):
+    tprr = targets / routes if routes > 0 else None
+    return tprr
+
+def like_name(name, clean):
+    if not name:
+        return ""
+    
+    if clean:
+        name = clean_name(name)
+
+    # Split the name into words, add a '%' after each word, and join them
+    return '%'.join(name.split()) + '%'
+
+def clean_name(name):
+    """
+    Cleans a name by removing suffixes, extraneous punctuation, and formatting properly,
+    while preserving initials and multi-initials like "C.J.".
+    """
+    # Remove suffixes like "Jr", "III", etc.
+    cleaned_name = re.sub(r'\b(Jr|Sr|II|III|IV|V|VI|VII|VIII|IX|X)\b', '', name)
+
+    # Replace periods with nothing, dashes with spaces, apostrophes with nothing
+    cleaned_name = cleaned_name.replace('.', '').replace('-', ' ').replace('\'', '')
+
+    # Strip leading/trailing whitespace
+    return cleaned_name.strip()

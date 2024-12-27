@@ -224,13 +224,13 @@ class PlayerSpider(scrapy.Spider):
 
             # Check if stats already exist for player/year combo
             self.db_util.cursor.execute("""
-                SELECT COUNT(*) FROM player_year_stats WHERE player_id = %s AND year = %s
+                SELECT COUNT(*) FROM cfb_player_year_stats WHERE player_id = %s AND year = %s
             """, (player_id, row_year))
 
             if self.db_util.cursor.fetchone()[0] == 0:
-                # Insert into player_year_stats table
+                # Insert into college player_year_stats table
                 self.db_util.cursor.execute("""
-                    INSERT INTO player_year_stats (
+                    INSERT INTO cfb_player_year_stats (
                         player_id, team_id, year, class, games_played, rec_yds, receptions, 
                         rush_yds, rush_att, rush_td, rec_td
                     )
