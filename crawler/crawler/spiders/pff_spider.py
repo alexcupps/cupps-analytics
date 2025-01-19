@@ -4,26 +4,61 @@ import logging
 import scrapy
 from ..util.db_util import DatabaseUtility
 from ..util.crawler_util import *
+import json
 
 class PFFSpider(scrapy.Spider):
     name = "pff_spider"
-    start_year = 2014
-    end_year = 2023
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, table_name, data_type, start_year=None, end_year=None, *args, **kwargs):
+        """
+        :param table_name: Name of the table to update (e.g., cfb_player_year_stats, nfl_player_year_stats).
+        :param data_type: Type of data being processed (e.g., "receiving", "rushing").
+        :param start_year: Start year for processing.
+        :param end_year: End year for processing.
+        """
         super().__init__(*args, **kwargs)
-        # Resolve the absolute path to the data directory
+        self.table_name = table_name
+        self.data_type = data_type
+        self.start_year = int(start_year)
+        self.end_year = int(end_year)
+
         self.data_dir = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), "../../../data/pff/cfb/receiving")
+            os.path.join(os.path.dirname(__file__), f"../../../data/pff/{self.table_name.split('_')[0]}/{self.data_type}")
         )
         logging.info(f"Resolved data directory: {self.data_dir}")
 
-        # Initialize the database utility
+        # Field mapping for updates
+        self.field_mapping = self.get_field_mapping(data_type)
+
+        # Initialize database utility
         self.db_util = DatabaseUtility()
 
         # Missing players log file
-        self.missing_players_file = os.path.abspath("pff_missing_players.csv")
+        self.missing_players_file = os.path.abspath(f"pff_missing_{self.table_name.split('_')[0]}_{data_type}_players.csv")
         self.missing_players = []
+
+    def get_field_mapping(self, data_type):
+        """
+        Define field mappings based on data type.
+        """
+        if data_type == "receiving":
+            return {
+                "grades_pass_route": "pff_rec_grade",
+                "yards_after_catch_per_reception": "yac_per_rec",
+                "yprr": "yprr",
+                "tprr": "tprr",
+                "grades_offense": "pff_off_grade",
+            }
+        elif data_type == "rushing":
+            return {
+                "yco_attempt": "yac_per_att",
+                "grades_run": "pff_run_grade",
+                "ypa": "ypa",
+                "elusive_rating": "elu_rtg",
+                "grades_offense": "pff_off_grade",
+            }
+        else:
+            raise ValueError(f"Unsupported data type: {data_type}")
 
     def start_requests(self):
         for year in range(self.start_year, self.end_year + 1):
@@ -47,8 +82,8 @@ class PFFSpider(scrapy.Spider):
                 franchise_id = row.get("franchise_id")
                 position = row.get("position")
                 name_like = like_name(player_name, True).lower()
-                
-                # Skip if position is not HB, WR, or TE
+
+                # Skip irrelevant positions if applicable
                 if position not in {"HB", "WR", "TE"}:
                     logging.info(f"Skipping player {player_name} with position {position}")
                     continue
@@ -58,32 +93,52 @@ class PFFSpider(scrapy.Spider):
                     continue
 
                 # Calculate additional metrics
-                try:
-                    routes = float(row.get("routes", 0))
-                    targets = float(row.get("targets", 0))
-                    tprr = get_tprr(targets, routes)
-                except ValueError:
-                    logging.warning(f"Invalid numeric data in row: {row}")
-                    continue
+                if "routes" in row and "targets" in row:
+                    try:
+                        routes = float(row.get("routes", 0))
+                        targets = float(row.get("targets", 0))
+                        row["tprr"] = get_tprr(targets, routes)
+                    except ValueError:
+                        logging.warning(f"Invalid numeric data in row: {row}")
+                        continue
 
                 # Map fields
-                pff_rec_grade = row.get("grades_pass_route")
-                yac_per_rec = row.get("yards_after_catch_per_reception")
-                yprr = row.get("yprr")
-                pff_off_grade = row.get("grades_offense")
+                updates = {db_field: row.get(csv_field) for csv_field, db_field in self.field_mapping.items()}
 
-                # Find the player in the database
-                self.db_util.cursor.execute("""
+                # Find the player in the database by sr_id OR exact name match
+                self.db_util.cursor.execute(f"""
                     SELECT c.player_year_id
-                    FROM cfb_player_year_stats c
+                    FROM {self.table_name} c
                     JOIN player p ON c.player_id = p.player_id
                     JOIN team t ON c.team_id = t.team_id
-                    WHERE p.sr_id LIKE %s AND t.pff_id = %s AND c.year = %s
-                """, (name_like, franchise_id, year))
+                    WHERE (p.sr_id LIKE %s OR p.name = %s) 
+                    AND t.pff_id = %s 
+                    AND c.year = %s
+                """, (name_like, player_name, franchise_id, year))
 
                 results = self.db_util.cursor.fetchall()
+
+                # If no match, check nicknames
                 if not results:
-                    logging.warning(f"Player {name_like} (Franchise ID: {franchise_id}, Year: {year}) not found.")
+                    logging.info(f"No direct match found for {player_name}. Checking nicknames...")
+
+                    # Safely escape player_name for JSON query
+                    escaped_player_name = json.dumps(player_name)
+
+                    # Query nicknames JSON field for matches
+                    self.db_util.cursor.execute(f"""
+                        SELECT c.player_year_id
+                        FROM {self.table_name} c
+                        JOIN player p ON c.player_id = p.player_id
+                        JOIN team t ON c.team_id = t.team_id
+                        WHERE JSON_CONTAINS(p.nicknames, %s) AND t.pff_id = %s AND c.year = %s
+                    """, (escaped_player_name, franchise_id, year))  # Escaped safely
+
+                    results = self.db_util.cursor.fetchall()
+
+                # If still no results, log as missing
+                if not results:
+                    logging.warning(f"Player {player_name} (Franchise ID: {franchise_id}, Year: {year}) not found after checking nicknames.")
                     self.missing_players.append({
                         "year": year,
                         "player": player_name,
@@ -93,21 +148,20 @@ class PFFSpider(scrapy.Spider):
 
                 # Update the player's stats
                 player_year_id = results[0][0]
-                self.update_player_stats(
-                    player_year_id, pff_rec_grade, yac_per_rec, yprr, tprr, pff_off_grade
-                )
+                self.update_player_stats(player_year_id, updates)
 
-    def update_player_stats(self, player_year_id, pff_rec_grade, yac_per_rec, yprr, tprr, pff_off_grade):
+    def update_player_stats(self, player_year_id, updates):
+        """
+        Update the player's stats dynamically based on the provided updates.
+        """
         try:
-            self.db_util.cursor.execute("""
-                UPDATE cfb_player_year_stats
-                SET pff_rec_grade = %s,
-                    yac_per_rec = %s,
-                    yprr = %s,
-                    tprr = %s,
-                    pff_off_grade = %s
+            set_clause = ", ".join(f"{field} = %s" for field in updates.keys())
+            values = list(updates.values()) + [player_year_id]
+            self.db_util.cursor.execute(f"""
+                UPDATE {self.table_name}
+                SET {set_clause}
                 WHERE player_year_id = %s
-            """, (pff_rec_grade, yac_per_rec, yprr, tprr, pff_off_grade, player_year_id))
+            """, values)
             self.db_util.conn.commit()
             logging.info(f"Updated stats for player_year_id {player_year_id}")
         except Exception as e:
@@ -121,6 +175,7 @@ class PFFSpider(scrapy.Spider):
                 writer = csv.DictWriter(file, fieldnames=["year", "player", "pff_id"])
                 writer.writeheader()
                 writer.writerows(self.missing_players)
+
         # Close database connection
         self.db_util.cursor.close()
         self.db_util.conn.close()

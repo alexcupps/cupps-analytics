@@ -10,7 +10,7 @@ class PlayerSpider(scrapy.Spider):
     custom_settings = get_custom_settings()
 
     # Define the years to iterate over
-    years = list(range(2000, 2023 + 1))  # From 2000 to 2023 inclusive
+    years = list(range(2024, 2024 + 1))  # From 2014 to 2023 inclusive
 
     def __init__(self, *args, **kwargs):
         super(PlayerSpider, self).__init__(*args, **kwargs)
@@ -19,7 +19,7 @@ class PlayerSpider(scrapy.Spider):
 
     def start_requests(self):
         # Fetch all schools from the database
-        self.db_util.cursor.execute("SELECT team_id, team_name, sr_name FROM team")
+        self.db_util.cursor.execute("SELECT team_id, team_name, sr_name FROM team WHERE is_nfl = FALSE")
         schools = self.db_util.cursor.fetchall()
 
         logging.info(f"Number of schools fetched: {len(schools)}")
@@ -185,7 +185,7 @@ class PlayerSpider(scrapy.Spider):
         
         # Check if the table exists
         if not table:
-            logging.info(f"No stats table found for player_id: {player_id}, year: {year}")
+            logging.info(f"No stats table found for player_id: {player_id}")
             return
 
         # Iterate over all rows in the stats table
