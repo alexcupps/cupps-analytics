@@ -11,7 +11,7 @@ class DraftSpider(scrapy.Spider):
     custom_settings = get_custom_settings()
 
     # Define the years to iterate over
-    years = list(range(2001, 2023 + 1))  # From 2000 to 2023 inclusive
+    years = list(range(2024, 2024 + 1))  # From 2000 to 2023 inclusive
 
     def __init__(self, *args, **kwargs):
         super(DraftSpider, self).__init__(*args, **kwargs)
