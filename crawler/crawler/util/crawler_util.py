@@ -1,5 +1,6 @@
 import logging
 import re
+import json
 
 def get_custom_settings():
     return {
@@ -109,3 +110,66 @@ def clean_name(name):
 
     # Strip leading/trailing whitespace
     return cleaned_name.strip()
+
+def find_player_id(db_util, player_name, franchise_id=None, year=None, table_name=None):
+    """
+    Helper function to find a player's ID in the database based on various matching criteria.
+    
+    :param db_util: Database utility object.
+    :param player_name: Name of the player to match.
+    :param franchise_id: Optional franchise ID for additional filtering.
+    :param year: Optional year for filtering.
+    :param table_name: Optional table name for joins.
+    :return: Matched player_id or None if not found.
+    """
+    try:
+        # Generate a name_like pattern
+        name_like = f"%{'%'.join(player_name.lower().split())}%"
+
+        # Base query to find the player
+        base_query = """
+            SELECT p.player_id
+            FROM player p
+        """
+
+        # Additional join and filter for player year stats table
+        if table_name and year:
+            base_query += f"""
+                JOIN {table_name} c ON p.player_id = c.player_id
+                JOIN team t ON c.team_id = t.team_id
+                WHERE (p.sr_id LIKE %s OR p.name = %s)
+                  AND t.pff_id = %s AND c.year = %s
+            """
+            params = (name_like, player_name, franchise_id, year)
+        else:
+            # Simple query for player table only
+            base_query += """
+                WHERE (p.sr_id LIKE %s OR p.name = %s)
+            """
+            params = (name_like, player_name)
+
+        # Execute the query
+        db_util.cursor.execute(base_query, params)
+        results = db_util.cursor.fetchall()
+
+        # If no direct match, check nicknames
+        if not results:
+            logging.info(f"No direct match found for {player_name}. Checking nicknames...")
+            escaped_player_name = json.dumps(player_name)
+            nickname_query = """
+                SELECT p.player_id
+                FROM player p
+                WHERE JSON_CONTAINS(p.nicknames, %s)
+            """
+            db_util.cursor.execute(nickname_query, (escaped_player_name,))
+            results = db_util.cursor.fetchall()
+
+        # Return the matched player_id if found
+        if results:
+            return results[0][0]
+        else:
+            return None
+    except Exception as e:
+        logging.error(f"Error finding player ID for {player_name}: {e}")
+        return None
+
