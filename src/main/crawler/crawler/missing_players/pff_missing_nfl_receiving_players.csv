@@ -1,0 +1,994 @@
+year,player,pff_id,rush_grade,rec_grade
+2014,Vincent Jackson,30,,75.1
+2014,Cecil Shorts,15,,61.7
+2014,Delanie Walker,31,,70.1
+2014,John Brown,1,,69.4
+2014,Pierre Garcon,32,,70
+2014,Antonio Gates,27,,73.4
+2014,Marques Colston,20,,64.3
+2014,Andre Holmes,23,,62.7
+2014,Larry Donnell,21,,63.6
+2014,Fred Jackson,4,,71.1
+2014,Nate Washington,31,,63.1
+2014,Taylor Gabriel,8,,72.6
+2014,Andre Roberts,32,,59
+2014,Miles Austin,8,,74.9
+2014,Julius Thomas,10,,70.5
+2014,Chris Hogan,4,,64.1
+2014,Charles Johnson,18,,67.3
+2014,Louis Murphy Jr.,30,,60.7
+2014,Joique Bell,11,,69.4
+2014,Benny Cunningham,26,,81.2
+2014,Travaris Cadet,20,,68.4
+2014,Paul Richardson Jr.,29,,66.9
+2014,Victor Cruz,21,,62.8
+2014,Bobby Rainey Jr.,30,,54.4
+2014,Jerick McKinnon,18,,64.1
+2014,Brian Quick,26,,73.9
+2014,Rashad Jennings,21,,42.5
+2014,Clay Harbor,15,,59.5
+2014,Denard Robinson,15,,61.1
+2014,Ricardo Lockette,29,,70.7
+2014,Ladarius Green,27,,76.6
+2014,Brenton Bersin,5,,69.4
+2014,Daniel Fells,21,,74.7
+2014,Josh Hill,20,,76.1
+2014,Jacoby Jones,3,,52
+2014,Mike Brown,15,,48.7
+2014,Isaiah Crowell,8,,54.8
+2014,Derek Carrier,28,,59
+2014,Ben Tate,25,,50.9
+2014,Adam Thielen,18,,66.3
+2014,Terrance West,8,,43.1
+2014,Brian Tyms,19,,56.7
+2014,Bryan Walters,29,,59
+2014,Eric Weems,2,,59
+2014,Joe Morgan,20,,53.3
+2014,Frankie Hammond,16,,47.6
+2014,Darren Fells,1,,69
+2014,Lorenzo Taliaferro,3,,64
+2014,Khiry Robinson,20,,73.6
+2014,Brian Leonhardt,23,,49
+2014,Corey Washington,21,,73.1
+2014,Adrien Robinson,21,,76.5
+2014,Jonathan Grimes,13,,58.6
+2014,Brandon Williams,5,,70.3
+2014,Danny Woodhead,27,,62.7
+2014,Chris Matthews,29,,90.6
+2014,Demetrius Harris,16,,56.5
+2014,Harold Hoskins,17,,52.9
+2014,Brandon Bostick,12,,50.1
+2014,Phillip Supernaw,3,,81.4
+2014,Micheal Spurlock,6,,39.5
+2014,Brad Smith,24,,46
+2014,Nic Jacobs,15,,60.2
+2014,Jeff Janis,12,,66.6
+2014,Cobi Hamilton,7,,51.8
+2014,Damian Williams,26,,78.3
+2014,Chris Ogbonnaya,21,,29.9
+2014,Charcandrick West,16,,58.3
+2014,Freddie Martino,2,,58.3
+2014,Steve Maneri,19,,29.3
+2014,Jordan Thompson,11,,39.1
+2014,Cameron Brate,30,,63.5
+2014,DeAndre Presley,5,,56.1
+2014,Joshua Cribbs,14,,57.8
+2015,Delanie Walker,31,,84.8
+2015,Pierre Garcon,32,,75.4
+2015,John Brown,1,,78.9
+2015,Marvin Jones Jr.,7,,73.9
+2015,Danny Woodhead,27,,90.8
+2015,Willie Snead IV,20,,73.3
+2015,Nate Washington,13,,63
+2015,Julius Thomas,15,,62.7
+2015,Antonio Gates,27,,77.5
+2015,Cecil Shorts,13,,61.1
+2015,David Johnson,1,,71.1
+2015,Marques Colston,20,,62.8
+2015,Chris Hogan,4,,58.9
+2015,Vincent Jackson,30,,77.6
+2015,Ladarius Green,27,,65.2
+2015,Seth Roberts,23,,57.7
+2015,Taylor Gabriel,8,,55.1
+2015,Fred Jackson,29,,60.8
+2015,Leonard Hankerson,4,,58.8
+2015,Zach Miller,6,,90
+2015,Jeremy Butler,3,,63.3
+2015,Larry Donnell,21,,60.8
+2015,Bryan Walters,15,,74.9
+2015,Charcandrick West,16,,46.5
+2015,Darren Fells,1,,67
+2015,Rashad Greene Sr.,15,,56
+2015,Jonathan Grimes,13,,69.9
+2015,Benny Cunningham,26,,75.5
+2015,Rashad Jennings,21,,60.8
+2015,Brian Quick,26,,51.4
+2015,Marc Mariani,6,,65.4
+2015,Miles Austin,24,,52.1
+2015,Cameron Brate,30,,67
+2015,Andre Holmes,23,,57
+2015,Jerick McKinnon,18,,82.1
+2015,J.J. Nelson,1,,83
+2015,Denard Robinson,15,,58.3
+2015,Josh Hill,20,,49.9
+2015,Donteea Dye Jr.,30,,52.8
+2015,Joique Bell,11,,87.2
+2015,Travaris Cadet,20,,72.7
+2015,Andre Roberts,32,,50.7
+2015,Derek Carrier,32,,61.9
+2015,Nick Boyle,3,,75.7
+2015,Isaiah Crowell,8,,62.6
+2015,Khiry Robinson,20,,80
+2015,Jeff Janis,12,,69.8
+2015,Jerome Simpson,28,,56.6
+2015,Clay Harbor,15,,58.7
+2015,Louis Murphy Jr.,30,,62.4
+2015,Cameron Meredith,6,,62.1
+2015,Adam Thielen,18,,60.7
+2015,MyCole Pruitt,18,,66.5
+2015,Jerome Cunningham,21,,38.7
+2015,Jeremy Ross,23,,63
+2015,Charles Johnson,18,,63.9
+2015,Tim Hightower,20,,79.1
+2015,Demetrius Harris,16,,52
+2015,Justin Perillo,12,,70.2
+2015,Daniel Brown,3,,64.2
+2015,Brenton Bersin,5,,74.8
+2015,Kendall Gaskins,28,,42.8
+2015,Taiwan Jones,23,,80
+2015,James O'Shaughnessy,16,,62.4
+2015,Kevin Smith,29,,55.8
+2015,Ricardo Lockette,29,,65.6
+2015,Daniel Fells,21,,90.6
+2015,Jarryd Hayne,28,,65.2
+2015,Terrelle Pryor Sr.,8,,52.9
+2015,Tyrell Williams,27,,53.3
+2015,Lorenzo Taliaferro,3,,87.3
+2015,Terrance West,3,,55.8
+2015,Phillip Supernaw,31,,45
+2015,Rico Richardson,31,,50.7
+2015,Tre McBride,31,,50.7
+2015,Khari Lee,6,,44.4
+2015,Marcus Easley,4,,57.4
+2015,Jonathan Krause,24,,56.3
+2015,Bobby Rainey Jr.,30,,72
+2015,Nic Jacobs,15,,31
+2015,Christopher Harper,19,,57.9
+2015,Frankie Hammond,16,,55.5
+2015,Zach Zenner,11,,57
+2015,B.J. Daniels,13,,65.6
+2015,Ben Edwards,21,,51.7
+2015,Matt Hazel,17,,53.5
+2015,Paul Richardson Jr.,29,,84.8
+2015,Scott Simonson,5,,73.7
+2015,Asante Cleveland,27,,53
+2015,Brittan Golden,1,,55.1
+2015,Matthew Mulligan,4,,40.4
+2015,Eric Weems,2,,68.4
+2015,Brian Leonhardt,28,,55.2
+2015,Tyler Varga,14,,67.8
+2015,Tyler Murphy,25,,57.2
+2015,Alonzo Harris,12,,26.1
+2015,Brian Parker,16,,48.1
+2016,Terrelle Pryor Sr.,8,,79.6
+2016,Tyrell Williams,27,,75.8
+2016,Pierre Garcon,32,,84.2
+2016,Marvin Jones Jr.,11,,71.3
+2016,David Johnson,1,,90
+2016,Willie Snead IV,20,,76.7
+2016,Delanie Walker,31,,77.1
+2016,Cameron Meredith,6,,73
+2016,Adam Thielen,18,,77.5
+2016,Antonio Gates,27,,71.1
+2016,Eli Rogers,25,,66.3
+2016,Seth Roberts,23,,52.8
+2016,Cameron Brate,30,,81.1
+2016,Chris Hogan,19,,65.6
+2016,Brian Quick,26,,61.3
+2016,Victor Cruz,21,,59.8
+2016,J.J. Nelson,1,,67.2
+2016,John Brown,1,,70.2
+2016,Zach Miller,6,,72.7
+2016,Taylor Gabriel,2,,85.9
+2016,Jerick McKinnon,18,,67.6
+2016,Travaris Cadet,20,,68.1
+2016,Isaiah Crowell,8,,72.2
+2016,Julius Thomas,15,,63.2
+2016,Rashad Jennings,21,,55.3
+2016,Paul Richardson Jr.,29,,76.1
+2016,Terrance West,3,,79.3
+2016,Charles Johnson,18,,60.1
+2016,Charcandrick West,16,,60.1
+2016,Ladarius Green,25,,82.8
+2016,Bryan Walters,15,,63.2
+2016,Chester Rogers,14,,61.8
+2016,Demetrius Harris,16,,44.9
+2016,Vincent Jackson,30,,57
+2016,Andre Holmes,23,,73.5
+2016,Zach Zenner,11,,70.7
+2016,Andre Roberts,11,,61.7
+2016,Bobby Rainey Jr.,21,,84.7
+2016,Cecil Shorts,30,,60.3
+2016,Walter Powell,4,,58.4
+2016,Tim Hightower,20,,71.5
+2016,Erik Swoope,14,,79.5
+2016,Jonathan Grimes,13,,66.1
+2016,Larry Donnell,21,,41.4
+2016,Daniel Brown,6,,61
+2016,Benny Cunningham,26,,57.2
+2016,Josh Hill,20,,53.6
+2016,Roger Lewis Jr.,21,,50.9
+2016,Christopher Harper,28,,58.8
+2016,Jeff Janis,12,,51.7
+2016,Darren Fells,1,,52.5
+2016,Neal Sterling,15,,63
+2016,De'Marcus Ayers,25,,68.2
+2016,Brittan Golden,1,,55.7
+2016,Tanner McEvoy,29,,61.7
+2016,Seth DeValve,8,,77.5
+2016,Freddie Martino,30,,66.9
+2016,Dominique Jones,17,,77.8
+2016,Brandon Bostick,22,,51.6
+2016,Mike Thomas,26,,47.2
+2016,Rashad Greene Sr.,15,,56
+2016,Wendall Williams,13,,84.4
+2016,Brenton Bersin,5,,58.2
+2016,Danny Woodhead,27,,63
+2016,Nick Boyle,3,,63.1
+2016,Ben Braunecker,6,,56.7
+2016,Justin Perillo,12,,52.7
+2016,Ross Travis,16,,40.9
+2016,Denard Robinson,15,,44.4
+2016,Phillip Supernaw,31,,56
+2016,Taiwan Jones,23,,84.4
+2016,Griff Whalen,19,,50.6
+2016,Je'Ron Hamm,28,,55.2
+2016,Cole Wick,11,,61.7
+2016,Brandon Williams,29,,66.3
+2016,Lorenzo Taliaferro,3,,68.1
+2016,Clay Harbor,11,,45.4
+2016,George Farmer,29,,39.7
+2016,Matt Lengel,19,,58.7
+2016,Ifeanyi Momah,1,,68.8
+2016,Sean McGrath,27,,53.5
+2016,Shane Wynn,15,,59.2
+2016,James O'Shaughnessy,16,,45.6
+2016,Kalif Raymond,10,,54.5
+2016,Derek Carrier,32,,50.4
+2016,MyCole Pruitt,6,,56.4
+2016,Hakeem Valles,1,,27.9
+2016,Matthew Mulligan,11,,44.2
+2016,Troymaine Pope,29,,31.5
+2016,Jeremy Butler,27,,56.7
+2016,Terrell Watson,24,,63.1
+2016,Damiere Byrd,5,,70.3
+2016,Khari Lee,11,,39.9
+2016,Mack Brown,32,,61
+2016,Chris Manhertz,5,,63
+2016,Chase Reynolds,26,,90.3
+2016,Jakeem Grant Sr.,17,,39.3
+2016,Braedon Bowman,22,,37.6
+2016,D.J. Tialavea,2,,76.9
+2016,Joique Bell,11,,61.9
+2016,Tony Washington,15,,62.4
+2016,Paul McRoberts,26,,55
+2016,DeAndre Smelter,28,,64.8
+2017,Adam Thielen,18,,80.1
+2017,Delanie Walker,31,,77.5
+2017,Marvin Jones Jr.,11,,75.8
+2017,Cooper Kupp,26,,78.2
+2017,Paul Richardson Jr.,29,,66.1
+2017,Keelan Cole Sr.,15,,72
+2017,Jerick McKinnon,18,,83.6
+2017,Chris Hogan,19,,60.9
+2017,Cameron Brate,30,,74.8
+2017,Roger Lewis Jr.,21,,58.9
+2017,Tyrell Williams,27,,62.4
+2017,Tarik Cohen,6,,84.9
+2017,Pierre Garcon,28,,76.3
+2017,Seth Roberts,23,,54.6
+2017,Julius Thomas,17,,66.9
+2017,J.J. Nelson,1,,58.2
+2017,Seth DeValve,8,,61.5
+2017,Taylor Gabriel,2,,64
+2017,John Brown,1,,58.8
+2017,Antonio Gates,27,,66.1
+2017,Eli Rogers,25,,53.4
+2017,Isaiah Crowell,8,,65.8
+2017,Demetrius Harris,16,,55.2
+2017,Danny Woodhead,3,,73.9
+2017,Chester Rogers,14,,59.4
+2017,Terrelle Pryor Sr.,32,,57.4
+2017,Nick Boyle,3,,61.7
+2017,Charcandrick West,16,,63.2
+2017,Zach Miller,6,,63.5
+2017,Austin Ekeler,27,,82.7
+2017,Kendrick Bourne,28,,63.8
+2017,Josh Hill,20,,54.2
+2017,Benny Cunningham,6,,75.4
+2017,Darren Fells,11,,68.5
+2017,Andre Holmes,4,,61.2
+2017,James O'Shaughnessy,15,,66.2
+2017,Jakeem Grant Sr.,17,,74.2
+2017,Daniel Brown,6,,55.1
+2017,Travaris Cadet,4,,65.4
+2017,Willie Snead IV,20,,58.5
+2017,Mike Tolbert,4,,49.3
+2017,Ross Travis,14,,57.4
+2017,Damiere Byrd,5,,58.8
+2017,Louis Murphy Jr.,28,,61.1
+2017,Tre McBride,6,,63.4
+2017,Brandon Williams,14,,64
+2017,Brenton Bersin,5,,67.4
+2017,Adam Shaheen,6,,84
+2017,Neal Sterling,22,,70.6
+2017,Austin Traylor,10,,54.9
+2017,Derek Carrier,26,,60.8
+2017,Logan Thomas,4,,54.5
+2017,Brittan Golden,1,,49.9
+2017,Tanner McEvoy,29,,53
+2017,Marcus Johnson,24,,64.7
+2017,David Johnson,1,,38.8
+2017,Brian Quick,32,,75.7
+2017,Mike Thomas,26,,61.9
+2017,Bobby Rainey Jr.,3,,72.4
+2017,Freddie Martino,30,,76.6
+2017,Phillip Supernaw,31,,60.1
+2017,JoJo Natson,22,,55.4
+2017,Jeff Janis,12,,58.7
+2017,Chad Williams,1,,59.7
+2017,Elijhaa Penny,1,,61.2
+2017,Chris Manhertz,5,,45.8
+2017,Terrance West,3,,62.8
+2017,Sean McGrath,27,,63.8
+2017,Darius Powe,21,,52.1
+2017,Andre Roberts,2,,59.5
+2017,Marquis Bundy,21,,50.2
+2017,Taiwan Jones,4,,92.4
+2017,Bernard Reedy,19,,65.9
+2017,De'Angelo Henderson Sr.,10,,67.4
+2017,Antony Auclair,30,,57.8
+2017,Ifeanyi Momah,1,,55.9
+2017,Eric Weems,31,,68.8
+2017,Stacy Coley,18,,53.2
+2017,Bobo Wilson,30,,69.4
+2017,Isaac Whitney,23,,58.7
+2017,Matt Hazel,8,,57.6
+2017,Max McCaffrey,28,,68
+2017,Ed Eagan,21,,39.9
+2017,Kalif Raymond,21,,57.1
+2017,Cethan Carter,7,,32.7
+2017,Mack Brown,18,,71.2
+2017,Larry Pinkard,15,,57.6
+2017,Jordan Leslie,8,,73.6
+2017,Matt LaCosse,10,,47.5
+2017,Zach Zenner,11,,60.6
+2018,Adam Thielen,18,,89.4
+2018,Taylor Gabriel,6,,69.5
+2018,Willie Snead IV,3,,66.9
+2018,John Brown,3,,65.1
+2018,Tarik Cohen,6,,82.3
+2018,Chester Rogers,14,,62.9
+2018,Tyrell Williams,27,,66.4
+2018,David Johnson,1,,60.4
+2018,Chris Hogan,19,,55
+2018,Keelan Cole Sr.,15,,59.3
+2018,Seth Roberts,23,,61.8
+2018,Kendrick Bourne,28,,65.5
+2018,Marvin Jones Jr.,11,,71.5
+2018,Austin Ekeler,27,,84.6
+2018,Antonio Gates,27,,70.9
+2018,David Moore,29,,64.4
+2018,Cooper Kupp,26,,79.1
+2018,Cameron Brate,30,,52.4
+2018,Dallas Goedert,24,,71.1
+2018,Chad Williams,1,,52.7
+2018,Pierre Garcon,28,,62.1
+2018,James O'Shaughnessy,15,,53.6
+2018,Paul Richardson Jr.,32,,64.1
+2018,DJ Chark Jr.,15,,51.6
+2018,Jakeem Grant Sr.,17,,71
+2018,Nick Boyle,3,,60.2
+2018,Marcell Ateman,23,,54.2
+2018,Demetrius Harris,16,,53.2
+2018,Terrelle Pryor Sr.,4,,58.2
+2018,Josh Hill,20,,56.9
+2018,Isaiah Crowell,22,,61.1
+2018,Trenton Cannon,22,,50.3
+2018,DeAndre Carter,13,,63.1
+2018,Andre Holmes,10,,52.2
+2018,Chase Edmonds,1,,65
+2018,Andy Jones,11,,58
+2018,Brandon Marshall,20,,54.9
+2018,Dan Arnold,20,,67.9
+2018,Anthony Firkser,31,,70.4
+2018,J.J. Nelson,1,,48.9
+2018,Andre Roberts,22,,56.1
+2018,Logan Thomas,4,,53.6
+2018,Jeff Wilson Jr.,28,,56.2
+2018,Mo Alie-Cox,14,,73.1
+2018,Eli Rogers,25,,63.3
+2018,Scott Simonson,21,,62.8
+2018,Darren Fells,8,,69.5
+2018,Derek Carrier,23,,52.9
+2018,Taquan Mizzell Sr.,6,,71.6
+2018,MyCole Pruitt,31,,82.4
+2018,Vyncint Smith,13,,51.9
+2018,Erik Swoope,14,,74.2
+2018,Zach Zenner,11,,45.5
+2018,Jake Kumerow,12,,58.5
+2018,Cameron Meredith,20,,56.3
+2018,Adam Shaheen,6,,55
+2018,Eric Saubert,2,,40.3
+2018,Rashad Greene Sr.,15,,45.3
+2018,Jawill Davis,21,,61.1
+2018,Antony Auclair,30,,44.8
+2018,Marcus Johnson,14,,61.4
+2018,Rico Gathers,9,,48.7
+2018,Brian Parker,10,,53.7
+2018,Matt Lengel,7,,60.8
+2018,Delanie Walker,31,,81.2
+2018,Seth DeValve,8,,60.9
+2018,Ben Braunecker,6,,60.6
+2018,Neal Sterling,22,,54.2
+2018,T.J. Logan,1,,68
+2018,Jalen Tolliver,1,,57.3
+2018,Chris Manhertz,5,,47.8
+2018,Bobo Wilson,30,,59.4
+2018,Robert Tonyan,12,,56.1
+2018,Victor Bolden Jr.,4,,55.3
+2018,Hakeem Valles,11,,47.5
+2018,KhaDarel Hodge,26,,57.8
+2018,Charcandrick West,16,,63.7
+2018,Roc Thomas,18,,46.9
+2018,John Kelly Jr.,26,,40.1
+2018,Brian Quick,32,,57.4
+2018,Joe Webb III,13,,53.2
+2018,Justin Watson,30,,51.2
+2018,Brandon Zylstra,18,,67.4
+2018,Garrett Griffin,20,,60.8
+2018,Detrez Newsome,27,,70.5
+2018,Ross Dwelley,28,,64.4
+2018,Damiere Byrd,5,,59.2
+2018,Darvin Kidsy,32,,66.5
+2018,Benny Cunningham,6,,65.8
+2018,De'Lance Turner,3,,68
+2018,Taiwan Jones,4,,58.4
+2018,Hunter Henry,27,,53.8
+2018,Pharoh Cooper,1,,57.5
+2018,Jonathan Williams,14,,56.5
+2018,Riley McCarron,19,,51.5
+2018,Cole Wick,31,,30.3
+2018,Freddie Martino,30,,54.1
+2018,Jerome Cunningham,11,,49.9
+2018,Tyrone Swoopes,29,,61.5
+2018,Johnny Mundt,26,,60.7
+2018,J.J. Jones,22,,60.7
+2018,Stacy Coley,21,,44
+2018,Travaris Cadet,5,,58.9
+2018,Khari Lee,4,,53.8
+2019,Cooper Kupp,26,,76.1
+2019,John Brown,4,,74.2
+2019,DJ Chark Jr.,15,,75.8
+2019,Austin Ekeler,27,,93.6
+2019,Tarik Cohen,6,,61.4
+2019,Marvin Jones Jr.,11,,74.6
+2019,Dallas Goedert,24,,79.1
+2019,Tyrell Williams,23,,66.7
+2019,Adam Thielen,18,,78.3
+2019,Darren Fells,13,,60.4
+2019,Kendrick Bourne,28,,71.1
+2019,Willie Snead IV,3,,58.9
+2019,Cameron Brate,30,,66.1
+2019,Taylor Gabriel,6,,61.5
+2019,Damiere Byrd,1,,64
+2019,Greg Ward,24,,71.3
+2019,Nick Boyle,3,,65
+2019,David Johnson,1,,74.5
+2019,Paul Richardson Jr.,32,,58.8
+2019,David Moore,29,,67.6
+2019,Seth Roberts,3,,63.2
+2019,Keelan Cole Sr.,15,,68.2
+2019,Josh Hill,20,,61.3
+2019,Jakeem Grant Sr.,17,,64.4
+2019,Marcus Johnson,14,,59
+2019,Delanie Walker,31,,66.2
+2019,Vyncint Smith,22,,62.6
+2019,Logan Thomas,11,,60.2
+2019,Chester Rogers,14,,52.1
+2019,Demetrius Harris,8,,48.8
+2019,Anthony Firkser,31,,73.2
+2019,Rhett Ellison,21,,59.7
+2019,Justin Watson,30,,62.5
+2019,Jake Kumerow,12,,58.2
+2019,James O'Shaughnessy,15,,66.3
+2019,Ross Dwelley,28,,58.9
+2019,J.J. Arcega-Whiteside,24,,53.3
+2019,Derek Carrier,23,,60.6
+2019,Chase Edmonds,1,,54.1
+2019,Seth DeValve,15,,62.9
+2019,DeAndre Carter,13,,57.8
+2019,Robert Tonyan,12,,62.1
+2019,Keelan Doss,23,,59
+2019,Chris Hogan,5,,54.7
+2019,Donte Moncrief,5,,47.7
+2019,Jordan Matthews,28,,52.5
+2019,Kalif Raymond,31,,82.5
+2019,Dan Arnold,1,,76.8
+2019,Brandon Zylstra,5,,64.1
+2019,Adam Shaheen,6,,62
+2019,Ben Braunecker,6,,55.9
+2019,Mo Alie-Cox,14,,59.8
+2019,MyCole Pruitt,31,,66.6
+2019,Bobo Wilson,30,,58.4
+2019,Jesper Horsted,6,,58
+2019,Tevin Jones,25,,52.1
+2019,KhaDarel Hodge,8,,54
+2019,Trevor Davis,17,,49.7
+2019,Jaeden Graham,2,,60
+2019,Marcell Ateman,23,,57.4
+2019,Daniel Brown,22,,55.2
+2019,Ryan Grant,12,,52.9
+2019,Diontae Spencer,10,,50.1
+2019,Deonte Harty,20,,68.2
+2019,Andre Roberts,4,,51
+2019,Johnny Mundt,26,,41
+2019,Steven Mitchell Jr.,13,,56.6
+2019,Jeff Wilson Jr.,28,,50
+2019,Stephen Carlson,8,,65.3
+2019,J.J. Nelson,23,,56.6
+2019,Ross Travis,22,,56
+2019,Mike Thomas,26,,62.5
+2019,Alexander Hollins,18,,54.7
+2019,Tanner Hudson,30,,40.3
+2019,Jason Moore,27,,57.2
+2019,Gunner Olszewski,19,,53.8
+2019,Ishmael Hyman,30,,57.6
+2019,Troymaine Pope,27,,56.5
+2019,Antony Auclair,30,,47.7
+2019,Trevon Wesco,22,,66.8
+2019,Michael Walker,15,,66.1
+2019,C.J. Board,15,,54
+2019,Zach Zenner,17,,44.4
+2019,Taiwan Jones,13,,94.1
+2019,T.J. Logan,30,,60
+2019,Eric Saubert,6,,50.2
+2019,Wes Hills,11,,63.1
+2019,Rico Gafford,23,,62.6
+2019,Darrius Shepherd,12,,44.6
+2019,Scott Simonson,21,,58.2
+2019,Ashton Dulin,14,,59.2
+2019,Tyrone Swoopes,29,,45.8
+2019,Charles Jones II,15,,58.7
+2019,Chris Manhertz,5,,52.2
+2019,Eric Tomlinson,23,,48.4
+2019,Kerrith Whyte Jr.,25,,26.9
+2019,Codey McElroy,30,,92.6
+2019,Rashard Davis,31,,79.6
+2019,Chad Williams,14,,55.4
+2019,Krishawn Hogan,20,,50.5
+2019,Cyril Grayson,30,,58.2
+2020,Cooper Kupp,26,,78
+2020,Marvin Jones Jr.,11,,75.3
+2020,Logan Thomas,32,,64.8
+2020,Adam Thielen,18,,87.9
+2020,DJ Chark Jr.,15,,71.2
+2020,Keelan Cole Sr.,15,,63.7
+2020,Greg Ward,24,,58.6
+2020,Damiere Byrd,19,,63.3
+2020,Kendrick Bourne,28,,72.9
+2020,Gabe Davis,4,,67.1
+2020,John Brown,4,,66.2
+2020,Robert Tonyan,12,,71.8
+2020,Chase Edmonds,1,,77
+2020,Dallas Goedert,24,,76.4
+2020,Travis Fulgham,24,,70.9
+2020,Austin Ekeler,27,,81.5
+2020,James Robinson,15,,64.1
+2020,Cameron Brate,30,,76.7
+2020,Willie Snead IV,3,,69.2
+2020,Anthony Firkser,31,,77.7
+2020,Jakeem Grant Sr.,17,,71
+2020,David Moore,29,,66.4
+2020,David Johnson,13,,45.5
+2020,Jerick McKinnon,28,,76.9
+2020,Dan Arnold,1,,64.4
+2020,Mo Alie-Cox,14,,79
+2020,James O'Shaughnessy,15,,63.5
+2020,Deonte Harty,20,,79.5
+2020,Darren Fells,13,,66.1
+2020,Marcus Johnson,14,,63.3
+2020,Chris Hogan,22,,56
+2020,Tyron Billy-Johnson,27,,81.2
+2020,Jeff Wilson Jr.,28,,48.9
+2020,Ross Dwelley,28,,70.3
+2020,Kaden Smith,21,,59.4
+2020,Mike Thomas,7,,56.5
+2020,Donald Parham Jr.,27,,69.2
+2020,Jamal Agnew,11,,54.2
+2020,Adam Shaheen,17,,64.3
+2020,Adam Trautman,20,,61.8
+2020,Kenny Stills,4,,58
+2020,Nick Boyle,3,,65.8
+2020,Kalif Raymond,31,,52.8
+2020,KhaDarel Hodge,8,,69.6
+2020,C.J. Board,21,,64.6
+2020,La'Mical Perine,22,,55.9
+2020,Demetrius Harris,6,,48
+2020,Malcolm Perry,17,,56.6
+2020,K.J. Hill,27,,53.7
+2020,Justin Watson,30,,58.8
+2020,Josh Hill,20,,45.6
+2020,Devonta Freeman,21,,44.3
+2020,Nick Westbrook-Ikhine,31,,62.9
+2020,Troymaine Pope,27,,44.6
+2020,Ryan Nall,6,,75.4
+2020,Nick Keizer,16,,37.3
+2020,Tarik Cohen,6,,55.6
+2020,Chris Manhertz,5,,41.5
+2020,Steven Mitchell Jr.,13,,64.7
+2020,Tanner Hudson,30,,65
+2020,MyCole Pruitt,31,,60.7
+2020,Damion Ratley,13,,51.3
+2020,Darrius Shepherd,12,,52.2
+2020,Josh Adams,22,,53.1
+2020,J.J. Arcega-Whiteside,24,,63.6
+2020,Terry Godwin II,15,,55.5
+2020,Diontae Spencer,10,,54.5
+2020,Malik Taylor,12,,58.7
+2020,Seth Roberts,5,,56.5
+2020,DeAndre Carter,6,,54.6
+2020,Andre Roberts,4,,59.4
+2020,Gunner Olszewski,19,,63.3
+2020,Ashton Dulin,14,,61.4
+2020,Jaeden Graham,2,,48.7
+2020,Eric Saubert,15,,51.4
+2020,Johnny Mundt,26,,63.5
+2020,Brandon Zylstra,5,,55.6
+2020,Ben Ellefson,15,,52.9
+2020,Luke Willson,29,,43.3
+2020,Trenton Cannon,5,,58.6
+2020,Cyril Grayson,30,,41.3
+2020,Vyncint Smith,22,,55.5
+2020,James Proche II,3,,61
+2020,Temarrick Hemingway,32,,60.5
+2020,Rico Gafford,23,,53.7
+2020,Buddy Howell,13,,52.6
+2020,Reggie Gilliam,4,,54.9
+2020,Daniel Brown,22,,81.9
+2020,Daurice Fountain,14,,61
+2020,Lamar Miller,32,,65.1
+2020,Taiwan Jones,4,,40.7
+2020,Kevin Rader,25,,31.3
+2020,Derek Carrier,23,,90.3
+2020,Brandon Dillon,18,,55.2
+2020,Dontrell Hilliard,13,,53.7
+2020,Antony Auclair,30,,50.9
+2020,Adrian Killins Jr.,24,,59.1
+2020,Stephen Carlson,8,,54
+2020,Nate Becker,4,,52.8
+2020,Craig Reynolds,15,,65.3
+2020,Cullen Gillaspia,13,,65.1
+2020,Jake Kumerow,20,,70.4
+2020,Seth DeValve,1,,48.9
+2021,Cooper Kupp,26,,93.1
+2021,Marvin Jones Jr.,15,,70.4
+2021,Austin Ekeler,27,,62.6
+2021,Adam Thielen,18,,73.5
+2021,Dallas Goedert,24,,91.1
+2021,Kendrick Bourne,19,,77.2
+2021,Gabe Davis,4,,80
+2021,Kalif Raymond,11,,60.6
+2021,Deonte Harty,20,,86.7
+2021,Cameron Brate,30,,57.8
+2021,Nick Westbrook-Ikhine,31,,67.6
+2021,Chase Edmonds,1,,60.1
+2021,Keelan Cole Sr.,22,,62.4
+2021,Dan Arnold,15,,68.5
+2021,Joshua Palmer,27,,63.6
+2021,Anthony Firkser,31,,57.5
+2021,James Robinson,15,,41.8
+2021,Chester Rogers,31,,57.4
+2021,Mo Alie-Cox,14,,59.4
+2021,Adam Trautman,20,,60
+2021,DeAndre Carter,32,,64.6
+2021,David Johnson,13,,70.6
+2021,Damiere Byrd,6,,54.5
+2021,Jamal Agnew,15,,62.8
+2021,James O'Shaughnessy,15,,63.4
+2021,Jerick McKinnon,16,,69.4
+2021,Donald Parham Jr.,27,,70.8
+2021,Robert Tonyan,12,,58.6
+2021,KhaDarel Hodge,11,,66.7
+2021,Logan Thomas,32,,67.9
+2021,Brandon Zylstra,5,,65.2
+2021,Trinity Benson,11,,47.6
+2021,Ashton Dulin,14,,61.4
+2021,Demetric Felton Jr.,8,,78.4
+2021,James Proche II,3,,66.5
+2021,DJ Chark Jr.,15,,64.1
+2021,MyCole Pruitt,31,,74.3
+2021,Jakeem Grant Sr.,6,,61.4
+2021,Marcus Johnson,31,,64.9
+2021,Adam Shaheen,17,,53.9
+2021,Cyril Grayson,30,,72.5
+2021,Mike Thomas,7,,59.8
+2021,Ronald Jones,30,,55.3
+2021,Eric Saubert,10,,49.3
+2021,Tom Kennedy,11,,55.2
+2021,Godwin Igwebuike,11,,58.4
+2021,Greg Ward,24,,55.4
+2021,Chris Manhertz,15,,52
+2021,Craig Reynolds,11,,67.9
+2021,Kristian Wilkerson,19,,59.9
+2021,Jeff Wilson Jr.,28,,55.2
+2021,Chris Herndon,18,,47.9
+2021,Willie Snead IV,5,,57.5
+2021,C.J. Board,21,,60
+2021,Parker Hesse,2,,61.5
+2021,Chris Hogan,20,,69
+2021,Cody White,25,,56.2
+2021,Tyree Jackson,24,,46.4
+2021,David Sills V,21,,50.7
+2021,D.J. Montgomery,22,,55.7
+2021,Jody Fortson,16,,70.6
+2021,J.J. Arcega-Whiteside,24,,46.5
+2021,Jake Kumerow,4,,53.6
+2021,Antony Auclair,13,,60.4
+2021,Ross Dwelley,28,,50.8
+2021,Darren Fells,30,,51.9
+2021,Shane Zylstra,11,,58.8
+2021,Demetrius Harris,1,,41.8
+2021,Tyron Billy-Johnson,23,,53.1
+2021,Diontae Spencer,10,,46
+2021,Jason Moore,27,,63.8
+2021,Malik Taylor,12,,63.1
+2021,K.J. Hill,27,,65.6
+2021,Mike Strachan,14,,60.9
+2021,Kevin Rader,25,,49.4
+2021,Tyrell Williams,11,,58.8
+2021,Davion Davis,13,,60.6
+2021,Gunner Olszewski,19,,64.6
+2021,Jesper Horsted,6,,82.9
+2021,Ethan Wolf,20,,57.2
+2021,David Moore,12,,51.9
+2021,Nick Boyle,3,,36.4
+2021,Derek Carrier,23,,57.2
+2021,Daniel Brown,22,,56.7
+2021,Andre Roberts,27,,58.9
+2021,John Brown,30,,51.8
+2021,Johnny Mundt,26,,51.6
+2021,Isaiah Coulter,6,,53
+2021,Ben Ellefson,18,,30.1
+2021,Darius Bradwell,27,,26.7
+2021,Devine Ozigbo,19,,69.3
+2021,Easop Winston Jr.,20,,57.3
+2021,Vyncint Smith,22,,51.8
+2021,Ryan Nall,6,,55.8
+2021,Wayne Gallman,18,,63.2
+2022,Austin Ekeler,27,,79.8
+2022,Adam Thielen,18,,66.3
+2022,Gabe Davis,4,,66.5
+2022,Joshua Palmer,27,,65.6
+2022,Cooper Kupp,26,,88.1
+2022,Marvin Jones Jr.,15,,60
+2022,Dallas Goedert,24,,83.5
+2022,Jerick McKinnon,16,,69.9
+2022,DeAndre Carter,27,,63.9
+2022,Christian Watson,12,,77.8
+2022,Robert Tonyan,12,,60.5
+2022,Kalif Raymond,11,,72.7
+2022,Logan Thomas,32,,57.6
+2022,DJ Chark Jr.,11,,69.6
+2022,Kendrick Bourne,19,,67.8
+2022,Nick Westbrook-Ikhine,31,,57.9
+2022,Jeff Wilson Jr.,17,,48.4
+2022,Cameron Brate,30,,54.5
+2022,Justin Watson,16,,53.8
+2022,Jamal Agnew,15,,64.1
+2022,Rashid Shaheed,20,,78.6
+2022,Mo Alie-Cox,14,,48
+2022,Eric Saubert,10,,49
+2022,Chase Edmonds,10,,36.1
+2022,Johnny Mundt,18,,56.9
+2022,Damiere Byrd,2,,66.2
+2022,Adam Trautman,20,,69.2
+2022,Keelan Cole Sr.,23,,49.5
+2022,Marcus Johnson,21,,54.7
+2022,MyCole Pruitt,2,,80.9
+2022,Darrell Henderson,15,,49.6
+2022,Ashton Dulin,14,,69.6
+2022,KhaDarel Hodge,2,,76.4
+2022,Michael Bandy,27,,53.2
+2022,Donald Parham Jr.,27,,82.2
+2022,David Sills V,21,,59.8
+2022,James Proche II,3,,52.4
+2022,Tanner Hudson,21,,59.8
+2022,Jody Fortson,16,,62.7
+2022,Avery Williams,2,,66.5
+2022,Anthony Firkser,2,,58.7
+2022,Tom Kennedy,11,,62.8
+2022,Shane Zylstra,11,,55.2
+2022,James Robinson,22,,57.5
+2022,Taysom Hill,20,,52.2
+2022,Parker Hesse,2,,55.7
+2022,Dan Arnold,15,,66.5
+2022,Michael Woods II,8,,53.4
+2022,Montrell Washington,10,,48.4
+2022,Craig Reynolds,11,,69.5
+2022,Mike Thomas,7,,47.4
+2022,Mike Strachan,14,,60.1
+2022,Chris Myarick,21,,61.6
+2022,Chris Manhertz,15,,38.9
+2022,Cade Johnson,29,,60.9
+2022,Jake Kumerow,4,,62.8
+2022,Pierre Strong Jr.,19,,67.4
+2022,Gunner Olszewski,25,,54.5
+2022,Dennis Houston,9,,54.7
+2022,Armani Rogers,32,,65.3
+2022,Ross Dwelley,28,,62.9
+2022,Stone Smartt,27,,54
+2022,Demetric Felton Jr.,8,,51.9
+2022,David Johnson,20,,69.9
+2022,Lance McCutcheon,26,,47.4
+2022,Jesper Horsted,23,,57.1
+2022,Ihmir Smith-Marsette,16,,42.1
+2022,Dareke Young,29,,60.6
+2022,Nsimba Webster,6,,48.2
+2022,John Brown,4,,62.7
+2022,Ben Ellefson,18,,89.5
+2022,Julius Chestnut,31,,71.6
+2022,Jaelon Darden,8,,57.2
+2022,Tanner Conner,17,,29.3
+2022,Deonte Harty,20,,49.3
+2022,Jason Moore,27,,50.3
+2022,Godwin Igwebuike,29,,65.4
+2022,Tyron Billy-Johnson,13,,53.6
+2022,Kirk Merritt,20,,55.3
+2022,Mason Kinsey,31,,55.9
+2022,Cody White,25,,61
+2022,Hunter Long,17,,57.2
+2022,Marcus Kemp,16,,61
+2022,C.J. Board,31,,54.6
+2023,Adam Thielen,5,,75.3
+2023,Cooper Kupp,26,,71.1
+2023,Dallas Goedert,24,,67.7
+2023,Gabe Davis,4,,68.7
+2023,Logan Thomas,32,,56.1
+2023,Rashid Shaheed,20,,69.4
+2023,Austin Ekeler,27,,57.4
+2023,DJ Chark Jr.,5,,60
+2023,Justin Watson,16,,61.6
+2023,Joshua Palmer,27,,67.6
+2023,Christian Watson,12,,70.3
+2023,Kendrick Bourne,19,,69.7
+2023,Tanner Hudson,7,,72.5
+2023,Tucker Kraft,12,,65.1
+2023,Kalif Raymond,11,,75.8
+2023,Nick Westbrook-Ikhine,31,,61.9
+2023,Donald Parham Jr.,27,,64
+2023,Taysom Hill,20,,66.4
+2023,Xavier Gipson,22,,56.5
+2023,Jaleel McLaughlin,10,,85.2
+2023,Adam Trautman,10,,49.2
+2023,Jerick McKinnon,16,,69.1
+2023,John Metchie III,13,,58.6
+2023,Andrei Iosivas,7,,62.1
+2023,KhaDarel Hodge,2,,64.9
+2023,Johnny Mundt,18,,72.5
+2023,Deonte Harty,4,,69.7
+2023,Mo Alie-Cox,14,,58.4
+2023,Dalvin Cook,3,,62.4
+2023,Chase Edmonds,30,,54.6
+2023,Jamal Agnew,15,,62.5
+2023,Jeff Wilson Jr.,17,,50
+2023,Andrew Ogletree,14,,62.3
+2023,Stone Smartt,27,,50.9
+2023,Robert Tonyan,6,,54.9
+2023,MyCole Pruitt,2,,76.7
+2023,Keelan Doss,27,,52.5
+2023,David Moore,30,,75
+2023,Marvin Jones Jr.,11,,44.3
+2023,Mike Boone,13,,51.3
+2023,Julian Hill,17,,46.2
+2023,Pierre Strong Jr.,8,,49.1
+2023,D.J. Montgomery,14,,58.4
+2023,Emanuel Wilson,12,,66.3
+2023,DeAndre Carter,23,,50.4
+2023,Craig Reynolds,11,,69.9
+2023,James Proche II,8,,49.7
+2023,La'Mical Perine,16,,48.3
+2023,Keaontay Ingram,16,,55
+2023,Malik Taylor,22,,51.6
+2023,Chris Manhertz,10,,44.2
+2023,Eric Saubert,13,,45.5
+2023,Kevin Rader,31,,33.4
+2023,Mike Strachan,5,,55.7
+2023,Willie Snead IV,28,,59
+2023,David Wells,30,,37.8
+2023,Colton Dowell,31,,54.6
+2023,Rodney Williams,25,,33
+2023,JaMycal Hasty,19,,57.6
+2023,Elijah Dotson,27,,62.7
+2023,Damiere Byrd,2,,52
+2023,Gunner Olszewski,21,,36.7
+2023,Jesper Horsted,23,,56
+2023,Mason Kinsey,31,,58.1
+2023,Ross Dwelley,28,,58.2
+2023,James Robinson,12,,63.1
+2023,Anthony Firkser,11,,52.3
+2023,Andy Isabella,4,,54.4
+2024,Cooper Kupp,26,,72.3
+2024,Tucker Kraft,12,,71.0
+2024,Joshua Palmer,27,,68.3
+2024,Dallas Goedert,24,,73.9
+2024,Adam Thielen,5,,76.5
+2024,Andrei Iosivas,7,,54.3
+2024,Nick Westbrook-Ikhine,31,,63.7
+2024,David Moore,5,,64.0
+2024,Christian Watson,12,,71.3
+2024,Austin Ekeler,32,,79.2
+2024,John Metchie III,13,,60.2
+2024,Jalen Coker,5,,73.8
+2024,Gabe Davis,15,,54.6
+2024,Rashid Shaheed,20,,69.2
+2024,Kendrick Bourne,19,,62.7
+2024,Justin Watson,16,,51.7
+2024,Taysom Hill,20,,65.9
+2024,Johnny Mundt,18,,58.6
+2024,Jaleel McLaughlin,10,,51.3
+2024,Kalif Raymond,11,,70.8
+2024,Mason Tipton,20,,47.6
+2024,Tanner Hudson,7,,66.8
+2024,Mo Alie-Cox,14,,58.0
+2024,Pierre Strong Jr.,8,,48.5
+2024,Kevin Austin Jr.,20,,57.6
+2024,Adam Trautman,10,,54.1
+2024,Ryan Miller,30,,58.5
+2024,Stone Smartt,27,,71.1
+2024,Julian Hill,17,,42.2
+2024,Michael Woods II,8,,49.2
+2024,K.J. Osborn,32,,51.9
+2024,Emanuel Wilson,12,,63.4
+2024,Ryan Flournoy,9,,62.1
+2024,Eric Saubert,28,,49.1
+2024,Andrew Ogletree,14,,58.5
+2024,DeAndre Carter,6,,56.5
+2024,DJ Chark Jr.,27,,53.4
+2024,Isaiah Davis,22,,73.8
+2024,KhaDarel Hodge,2,,64.5
+2024,MyCole Pruitt,25,,52.0
+2024,Greg Dulcich,21,,42.6
+2024,Xavier Gipson,22,,49.9
+2024,Ashton Dulin,14,,55.6
+2024,Craig Reynolds,11,,59.8
+2024,Cam Grandy,7,,71.0
+2024,Laviska Shenault Jr.,27,,60.3
+2024,Chris Manhertz,21,,66.3
+2024,Tanner Conner,17,,53.4
+2024,Kristian Wilkerson,23,,63.3
+2024,Jeff Wilson Jr.,17,,52.0
+2024,Feleipe Franks,5,,60.9
+2024,Jack Stoll,17,,46.1
+2024,James Proche II,8,,66.8
+2024,Cody White,29,,66.8
+2024,Isaiah Williams,7,,56.7
+2024,Ramel Keyton,23,,57.3
+2024,Julius Chestnut,31,,53.8
+2024,Sione Vaki,11,,81.7
+2024,Jared Wayne,13,,47.1
+2024,Chris Collier,23,,58.5
+2024,Chris Blair,2,,66.2
+2024,Mason Kinsey,31,,49.4
+2024,Jody Fortson,16,,51.5
+2024,Xavier Smith,26,,67.9
+2024,Terrell Jennings,19,,52.3
+2024,Kameron Johnson,30,,44.6
+2024,Jaelon Darden,29,,54.8
+2024,Steven Sims,3,,55.7
+2024,Zach Davidson,4,,51.1
+2024,Shane Zylstra,11,,50.5
+2024,Irv Smith Jr.,13,,43.9
+2024,Ross Dwelley,2,,52.3
+2024,Dareke Young,29,,57.2
+2024,Tom Kennedy,11,,54.4

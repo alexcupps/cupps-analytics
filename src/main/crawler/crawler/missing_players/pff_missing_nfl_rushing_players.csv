@@ -1,0 +1,447 @@
+year,player,pff_id,rush_grade,rec_grade
+2014,Joique Bell,11,64.4,69.4
+2014,Mark Ingram II,20,71.9,47.4
+2014,Terrance West,8,59.6,43.1
+2014,Rashad Jennings,21,61.1,42.5
+2014,Isaiah Crowell,8,52.3,54.8
+2014,Fred Jackson,4,72.2,71.1
+2014,Denard Robinson,15,55.5,61.1
+2014,Ben Tate,25,43.2,50.9
+2014,Jerick McKinnon,18,70.6,64.1
+2014,Bobby Rainey Jr.,30,59.5,54.4
+2014,Khiry Robinson,20,77.6,73.6
+2014,Lorenzo Taliaferro,3,61.1,64
+2014,Benny Cunningham,26,56.4,81.2
+2014,Jonathan Grimes,13,59.3,58.6
+2014,Danny Woodhead,27,53.3,62.7
+2014,Chris Ogbonnaya,21,62.3,29.9
+2014,Shaun Draughn,8,48.3,56.3
+2014,Travaris Cadet,20,39.8,68.4
+2014,Jacoby Jones,3,65.6,52
+2014,John Brown,1,48.4,69.4
+2014,Andre Roberts,32,59.1,59
+2014,Taylor Gabriel,8,50.9,72.6
+2014,Ricardo Lockette,29,64.6,70.7
+2014,Bryan Walters,29,57.2,59
+2014,Joe Morgan,20,70,53.3
+2014,Charles Johnson,18,56.5,67.3
+2014,Chris Williams,6,56.6,55.7
+2014,DeAndre Presley,5,59.2,56.1
+2014,Derek Carrier,28,63,59
+2015,Todd Gurley II,26,71.2,69.1
+2015,Rashad Jennings,21,69.9,60.8
+2015,Isaiah Crowell,8,63.3,62.6
+2015,Charcandrick West,16,61.8,46.5
+2015,Melvin Gordon III,27,51.9,66.4
+2015,Mark Ingram II,20,64.8,70.9
+2015,David Johnson,1,69.5,71.1
+2015,Duke Johnson Jr.,8,67,83.6
+2015,Danny Woodhead,27,58.3,90.8
+2015,Tim Hightower,20,75.7,79.1
+2015,Joique Bell,11,61.1,87.2
+2015,Denard Robinson,15,53.8,58.3
+2015,Terrance West,3,56.1,55.8
+2015,Jonathan Grimes,13,53.4,69.9
+2015,Khiry Robinson,20,57.5,80
+2015,Jerick McKinnon,18,69.2,82.1
+2015,Benny Cunningham,26,48.3,75.5
+2015,Fred Jackson,29,52.6,60.8
+2015,Zach Zenner,11,60,57
+2015,Jarryd Hayne,28,66.2,65.2
+2015,Taiwan Jones,23,76.2,80
+2015,Kendall Gaskins,28,60.1,42.8
+2015,Lorenzo Taliaferro,3,67.6,87.3
+2015,Travaris Cadet,20,55.3,72.7
+2015,Cecil Shorts,13,43.5,61.1
+2015,John Crockett,12,60.2,57
+2015,B.J. Daniels,13,57.6,65.6
+2015,Marvin Jones Jr.,7,57.6,73.9
+2015,Bobby Rainey Jr.,30,31.8,72
+2015,Alonzo Harris,12,58.9,26.1
+2015,John Brown,1,61.8,78.9
+2015,Adam Thielen,18,72.3,60.7
+2015,Isaiah Pead,25,29.3,60
+2015,Chris Hogan,4,58.3,58.9
+2015,Terrelle Pryor Sr.,8,59.2,52.9
+2015,Damaris Johnson,31,56.6,58.6
+2015,Joe Webb III,5,59.7,60
+2015,Eric Weems,2,65.3,68.4
+2015,Tony Washington,15,63.1,52.3
+2015,Delanie Walker,31,70,84.8
+2015,Glenn Winston,8,58.9,56.4
+2015,J.J. Nelson,1,60.7,83
+2015,Tre McBride,31,63.1,50.7
+2015,Tyler Varga,14,59.3,67.8
+2015,Jeremy Ross,23,62,63
+2016,David Johnson,1,68.3,90
+2016,Todd Gurley II,26,55.4,63.2
+2016,Melvin Gordon III,27,65.5,70.9
+2016,Mark Ingram II,20,67.7,79.6
+2016,Isaiah Crowell,8,65,72.2
+2016,Terrance West,3,69.2,79.3
+2016,Rashad Jennings,21,53.1,55.3
+2016,Jerick McKinnon,18,56.5,67.6
+2016,Tim Hightower,20,51.4,71.5
+2016,Zach Zenner,11,57.8,70.7
+2016,Charcandrick West,16,57.8,60.1
+2016,Duke Johnson Jr.,8,59.8,71
+2016,Denard Robinson,15,61.2,44.4
+2016,Jonathan Grimes,13,68.6,66.1
+2016,Benny Cunningham,26,52.6,57.2
+2016,Danny Woodhead,27,53.3,63
+2016,Bobby Rainey Jr.,21,64.4,84.7
+2016,Troymaine Pope,29,60.5,31.5
+2016,Terrell Watson,24,66.1,63.1
+2016,Khiry Robinson,22,57.1,54
+2016,Mack Brown,32,64,61
+2016,Terrelle Pryor Sr.,8,43.9,79.6
+2016,Taylor Gabriel,2,50.8,85.9
+2016,J.J. Nelson,1,75.7,67.2
+2016,Travaris Cadet,20,52.3,68.1
+2016,Chris Hogan,19,58.3,65.6
+2016,Robbie Chosen,22,75.3,56.4
+2016,Joique Bell,11,59.6,61.9
+2016,Adam Thielen,18,59.1,77.5
+2016,Daryl Richardson,15,62.9,56.3
+2016,Shane Wynn,15,59.7,59.2
+2016,Bronson Hill,15,66.4,57.1
+2016,De'Marcus Ayers,25,53.6,68.2
+2016,Delanie Walker,31,59.2,77.1
+2016,Jeff Janis,12,70.2,51.7
+2016,Cameron Meredith,6,,73
+2016,Taiwan Jones,23,59.7,84.4
+2016,Will Fuller V,13,56.6,61.7
+2016,Bryan Walters,15,,63.2
+2016,Marc Mariani,31,63.1,56.5
+2016,Paul Richardson Jr.,29,56.2,76.1
+2016,John Brown,1,63.1,70.2
+2016,Lorenzo Taliaferro,3,59.5,68.1
+2016,Jakeem Grant Sr.,17,58.5,39.3
+2016,Marvin Jones Jr.,11,56.6,71.3
+2016,George Farmer,29,60,39.7
+2016,Eli Rogers,25,56.6,66.3
+2017,Todd Gurley II,26,76.4,87.8
+2017,Melvin Gordon III,27,71.5,71.7
+2017,Mark Ingram II,20,68.4,69.8
+2017,Isaiah Crowell,8,61.4,65.8
+2017,Jerick McKinnon,18,73.9,83.6
+2017,Tarik Cohen,6,64.9,84.9
+2017,Duke Johnson Jr.,8,70.5,89.4
+2017,Mike Tolbert,4,54.5,49.3
+2017,Austin Ekeler,27,66.4,82.7
+2017,Terrance West,3,50.4,62.8
+2017,Elijhaa Penny,1,66.1,61.2
+2017,Travaris Cadet,4,59.8,65.4
+2017,Charcandrick West,16,62.6,63.2
+2017,Zach Zenner,11,57.2,60.6
+2017,Danny Woodhead,3,68.2,73.9
+2017,David Johnson,1,39.8,38.8
+2017,Benny Cunningham,6,53.3,75.4
+2017,Taylor Gabriel,2,60.7,64
+2017,Mack Brown,18,65,71.2
+2017,Joe Webb III,4,75.9,55.7
+2017,De'Angelo Henderson Sr.,10,60,67.4
+2017,Terrell Watson,25,66.4,59.3
+2017,Chris Hogan,19,45.3,60.9
+2017,Bobo Wilson,30,55.5,69.4
+2017,Chester Rogers,14,47,59.4
+2017,Jakeem Grant Sr.,17,57.6,74.2
+2017,Robbie Chosen,22,56.5,72.6
+2017,LeShun Daniels,32,62.6,55.1
+2017,J.J. Nelson,1,63.9,58.2
+2017,Bernard Reedy,19,55.5,65.9
+2017,Will Fuller V,13,50.5,68.6
+2017,Chad Williams,1,69.5,59.7
+2017,Delanie Walker,31,57.6,77.5
+2017,Bobby Rainey Jr.,3,59.6,72.4
+2017,Bronson Hill,1,59.9,
+2017,Damiere Byrd,5,63.1,58.8
+2017,JoJo Natson,22,57.2,55.4
+2017,Josh Hill,20,,54.2
+2017,Adam Thielen,18,63,80.1
+2017,Eric Weems,31,57,68.8
+2017,John Brown,1,63.1,58.8
+2017,Kalif Raymond,21,56.2,57.1
+2018,Todd Gurley II,26,79.2,62
+2018,David Johnson,1,63.2,60.4
+2018,Melvin Gordon III,27,89.4,60.6
+2018,Mark Ingram II,20,81,55.3
+2018,Isaiah Crowell,22,73,61.1
+2018,Austin Ekeler,27,79.9,84.6
+2018,Tarik Cohen,6,59.3,82.3
+2018,Jeff Wilson Jr.,28,54.8,56.2
+2018,Chase Edmonds,1,60.3,65
+2018,Zach Zenner,11,76.8,45.5
+2018,Duke Johnson Jr.,8,68.3,74
+2018,Trenton Cannon,22,59.2,50.3
+2018,John Kelly Jr.,26,61.6,40.1
+2018,Benny Cunningham,6,44.2,65.8
+2018,Travaris Cadet,5,45.4,58.9
+2018,Taylor Gabriel,6,63.8,69.5
+2018,Detrez Newsome,27,78.5,70.5
+2018,Taquan Mizzell Sr.,6,50.9,71.6
+2018,Roc Thomas,18,64.8,46.9
+2018,Darius Jackson,9,52.1,53.8
+2018,Adam Thielen,18,68.6,89.4
+2018,Cooper Kupp,26,49.8,79.1
+2018,J.J. Nelson,1,51.6,48.9
+2018,Seth Roberts,23,54.8,61.8
+2018,Jonathan Williams,14,52.7,56.5
+2018,John Brown,3,46.4,65.1
+2018,Tyrell Williams,27,60.1,66.4
+2018,Charcandrick West,16,55,63.7
+2018,Paul Richardson Jr.,32,63.1,64.1
+2018,Robbie Chosen,22,52.2,70.8
+2018,Jeremy McNichols,31,62.5,
+2018,T.J. Logan,1,51.9,68
+2018,De'Angelo Henderson Sr.,22,48.1,59.9
+2018,Andre Roberts,22,61.3,56.1
+2018,David Moore,29,63.1,64.4
+2018,Marcus Johnson,14,56.6,61.4
+2018,Terrelle Pryor Sr.,4,59.5,58.2
+2018,De'Lance Turner,3,62.8,68
+2018,Chester Rogers,14,56.6,62.9
+2018,Jakeem Grant Sr.,17,56.6,71
+2018,Allen Robinson II,6,63.1,78.7
+2018,J.J. Jones,22,56.5,60.7
+2018,Willie Snead IV,3,63,66.9
+2018,Eli Rogers,25,56.6,63.3
+2018,DeAndre Carter,13,63.4,63.1
+2018,Chad Williams,1,63.1,52.7
+2019,Todd Gurley II,26,79.1,34.8
+2019,Mark Ingram II,3,75.5,78
+2019,Melvin Gordon III,27,71.7,50.7
+2019,Austin Ekeler,27,68.8,93.6
+2019,Benny Snell Jr.,25,67,66.5
+2019,David Johnson,1,68.9,74.5
+2019,Duke Johnson Jr.,13,82.3,71.2
+2019,Tarik Cohen,6,57.4,61.4
+2019,Chase Edmonds,1,76.3,54.1
+2019,Jeff Wilson Jr.,28,73.5,50
+2019,Kerrith Whyte Jr.,25,70.1,26.9
+2019,Troymaine Pope,27,62.6,56.5
+2019,Wes Hills,11,57.6,63.1
+2019,Taiwan Jones,13,68.5,94.1
+2019,Adam Thielen,18,50.7,78.3
+2019,Trevor Davis,17,64.3,49.7
+2019,David Moore,29,72.4,67.6
+2019,Deonte Harty,20,59.8,68.2
+2019,Jakeem Grant Sr.,17,52.9,64.4
+2019,De'Lance Turner,17,63.6,57.2
+2019,T.J. Logan,30,53.5,60
+2019,Zach Zenner,17,51.7,44.4
+2019,Diontae Spencer,10,55.1,50.1
+2019,Vyncint Smith,22,71.9,62.6
+2019,Taylor Gabriel,6,54.8,61.5
+2019,John Kelly Jr.,26,61.2,
+2019,Willie Snead IV,3,52.7,58.9
+2019,Ryan Nall,6,61.7,53.2
+2019,Marvin Jones Jr.,11,,74.6
+2019,John Brown,4,50.9,74.2
+2019,Greg Ward,24,71.5,71.3
+2019,Cooper Kupp,26,62.9,76.1
+2019,DJ Chark Jr.,15,59.5,75.8
+2019,Allen Robinson II,6,,81.1
+2019,Robbie Chosen,22,55.6,68.6
+2019,Kalif Raymond,31,56.6,82.5
+2019,Chester Rogers,14,63.1,52.1
+2019,Paul Richardson Jr.,32,,58.8
+2019,Trevon Wesco,22,62.3,66.8
+2019,Derek Carrier,23,63.1,60.6
+2019,Andre Roberts,4,63.1,51
+2019,Keelan Cole Sr.,15,50.9,68.2
+2020,James Robinson,15,78.5,64.1
+2020,Melvin Gordon III,10,83,36.4
+2020,Todd Gurley II,2,59.1,44
+2020,David Johnson,13,72.8,45.5
+2020,Jeff Wilson Jr.,28,73.9,48.9
+2020,Austin Ekeler,27,74.8,81.5
+2020,Benny Snell Jr.,25,58.7,52.7
+2020,Chase Edmonds,1,62.6,77
+2020,Jerick McKinnon,28,74.7,76.9
+2020,Duke Johnson Jr.,13,59.8,66.7
+2020,Mark Ingram II,3,55.6,50.4
+2020,La'Mical Perine,22,58.4,55.9
+2020,Devonta Freeman,21,60.5,44.3
+2020,Anthony McFarland Jr.,25,57.7,59.2
+2020,Josh Adams,22,84.9,53.1
+2020,Buddy Howell,13,65.5,52.6
+2020,Troymaine Pope,27,73.7,44.6
+2020,Tarik Cohen,6,66.8,55.6
+2020,Trenton Cannon,5,68.1,58.6
+2020,David Moore,29,67.3,66.4
+2020,Dontrell Hilliard,13,75.2,53.7
+2020,Deonte Harty,20,64,79.5
+2020,Jamal Agnew,11,61.6,54.2
+2020,Artavis Pierce,6,79.1,55.7
+2020,Gunner Olszewski,19,61.3,63.3
+2020,Robbie Chosen,5,60.9,76
+2020,Ryan Nall,6,49.7,75.4
+2020,Cooper Kupp,26,66.2,78
+2020,Diontae Spencer,10,65.9,54.5
+2020,Jakeem Grant Sr.,17,63.3,71
+2020,Tyron Billy-Johnson,27,55.1,81.2
+2020,Adam Thielen,18,50.2,87.9
+2020,John Lovett,12,51.2,49.9
+2020,Logan Thomas,32,63.9,64.8
+2020,Malcolm Perry,17,59.2,56.6
+2020,Greg Ward,24,48.6,58.6
+2020,Ashton Dulin,14,50.5,61.4
+2020,Damiere Byrd,19,36.8,63.3
+2020,DeAndre Carter,6,56.6,54.6
+2020,Allen Robinson II,6,59.2,88.5
+2020,C.J. Board,21,59.2,64.6
+2020,JoJo Natson,8,56.6,56.5
+2020,Terry Godwin II,15,59.2,55.5
+2020,Keelan Cole Sr.,15,56.6,63.7
+2020,Gabe Davis,4,58.9,67.1
+2020,Malik Taylor,12,63,58.7
+2020,Will Fuller V,13,,85
+2020,Craig Reynolds,15,59.1,65.3
+2020,Kalif Raymond,31,57.2,52.8
+2020,Andre Roberts,4,56.6,59.4
+2020,Mike Thomas,7,59.2,56.5
+2020,Brandon Zylstra,5,58.3,55.6
+2020,Adrian Killins Jr.,24,56.6,59.1
+2021,Austin Ekeler,27,79.9,62.6
+2021,Melvin Gordon III,10,83.4,52.9
+2021,James Robinson,15,77.1,41.8
+2021,Mark Ingram II,20,61.9,76.2
+2021,Chase Edmonds,1,71.7,60.1
+2021,Ronald Jones,30,67.6,55.3
+2021,Jeff Wilson Jr.,28,62.2,55.2
+2021,Duke Johnson Jr.,17,73.7,53.2
+2021,David Johnson,13,56.3,70.6
+2021,Craig Reynolds,11,75.6,67.9
+2021,Jerick McKinnon,16,61.8,69.4
+2021,Benny Snell Jr.,25,61.9,45.6
+2021,Wayne Gallman,18,64,63.2
+2021,Godwin Igwebuike,11,72.8,58.4
+2021,Kendrick Bourne,19,76.3,77.2
+2021,DeAndre Carter,32,48,64.6
+2021,La'Mical Perine,22,56.4,53.3
+2021,Demetric Felton Jr.,8,62.5,78.4
+2021,Jamal Agnew,15,77.6,62.8
+2021,Cooper Kupp,26,51.3,93.1
+2021,Deonte Harty,20,74.9,86.7
+2021,Jakeem Grant Sr.,6,69.8,61.4
+2021,Buddy Howell,26,65.5,59.7
+2021,JaQuan Hardy,9,67.2,59.9
+2021,Kalif Raymond,11,58.5,60.6
+2021,Robbie Chosen,5,72.4,59.3
+2021,Anthony McFarland Jr.,25,50,55.9
+2021,Trenton Cannon,28,62.4,54.4
+2021,Andre Roberts,27,58,58.9
+2021,Ashton Dulin,14,58,61.4
+2021,Marcus Johnson,31,62.3,64.9
+2021,John Kelly Jr.,8,62.7,
+2021,C.J. Board,21,59.2,60
+2021,Nathan Cottrell,15,62.9,
+2021,Devine Ozigbo,19,57.3,69.3
+2021,Ryan Nall,6,62.2,55.8
+2021,Maurice Ffrench,27,56.6,
+2021,Joshua Palmer,27,,63.6
+2021,Gunner Olszewski,19,63.1,64.6
+2021,Chester Rogers,31,63.1,57.4
+2021,Cyril Grayson,30,59.9,72.5
+2021,Adam Thielen,18,,73.5
+2021,Nate McCrary,3,59.7,60
+2022,Austin Ekeler,27,82.6,79.8
+2022,Jeff Wilson Jr.,17,74.4,48.4
+2022,James Robinson,22,59.7,57.5
+2022,Taysom Hill,20,82.9,52.2
+2022,Jerick McKinnon,16,57.1,69.9
+2022,Melvin Gordon III,10,52.3,50.5
+2022,Darrell Henderson,15,62.3,49.6
+2022,Chase Edmonds,10,62.7,36.1
+2022,Mark Ingram II,20,66.4,54.4
+2022,Craig Reynolds,11,71.1,69.5
+2022,Avery Williams,2,62.4,66.5
+2022,Benny Snell Jr.,25,81.1,74.2
+2022,Jamal Agnew,15,72.2,64.1
+2022,David Johnson,20,42,69.9
+2022,Pierre Strong Jr.,19,83.8,67.4
+2022,Julius Chestnut,31,59.4,71.6
+2022,Cooper Kupp,26,58.1,88.1
+2022,Gunner Olszewski,25,61.5,54.5
+2022,Christian Watson,12,61.9,77.8
+2022,Kalif Raymond,11,67.2,72.7
+2022,Kendrick Bourne,19,61.4,67.8
+2022,Anthony McFarland Jr.,25,71.7,65.4
+2022,Montrell Washington,10,81.1,48.4
+2022,Rashid Shaheed,20,80.7,78.6
+2022,Reggie Bonnafon,32,52,
+2022,Godwin Igwebuike,29,64.3,65.4
+2022,DeAndre Carter,27,56.7,63.9
+2022,Duke Johnson Jr.,4,60.7,58.2
+2022,Armani Rogers,32,68,65.3
+2022,Ashton Dulin,14,61.5,69.6
+2022,Michael Woods II,8,,53.4
+2022,Jaelon Darden,8,56.2,57.2
+2022,Joshua Palmer,27,62,65.6
+2022,Ihmir Smith-Marsette,16,57.2,42.1
+2022,Demetric Felton Jr.,8,59.2,51.9
+2022,Adam Thielen,18,56.6,66.3
+2023,Austin Ekeler,27,65.1,57.4
+2023,Taysom Hill,20,86.1,66.4
+2023,Jaleel McLaughlin,10,82.8,85.2
+2023,Dalvin Cook,3,51.2,62.4
+2023,Pierre Strong Jr.,8,63.3,49.1
+2023,Chase Edmonds,30,59.3,54.6
+2023,Craig Reynolds,11,79.8,69.9
+2023,Jeff Wilson Jr.,17,67.9,50
+2023,Keaontay Ingram,16,66.1,55
+2023,Melvin Gordon III,3,62.9,85.2
+2023,Emanuel Wilson,12,79.9,66.3
+2023,La'Mical Perine,16,65.8,48.3
+2023,Jerick McKinnon,16,60.6,69.1
+2023,Xavier Gipson,22,62.4,56.5
+2023,Kalif Raymond,11,63.8,75.8
+2023,Rashid Shaheed,20,71.6,69.4
+2023,Mike Boone,13,40.2,51.3
+2023,Jamal Agnew,15,49.1,62.5
+2023,Christian Watson,12,60.1,70.3
+2023,Elijah Dotson,27,53.2,62.7
+2023,Deonte Harty,4,51.6,69.7
+2023,DeAndre Carter,23,66.1,50.4
+2023,John Metchie III,13,55.1,58.6
+2023,Kendrick Bourne,19,62,69.7
+2023,Joshua Palmer,27,,67.6
+2023,Gabe Davis,4,59.5,68.7
+2023,Dallas Goedert,24,,67.7
+2023,Logan Thomas,32,61.7,56.1
+2023,James Robinson,12,59.7,63.1
+2023,Adam Thielen,5,,75.3
+2023,KhaDarel Hodge,2,49.4,64.9
+2023,Cooper Kupp,26,56.6,71.1
+2024,Jaleel McLaughlin,10,70.3,51.3
+2024,Emanuel Wilson,12,86.3,63.4
+2024,Austin Ekeler,32,71.0,79.2
+2024,Taysom Hill,20,89.9,65.9
+2024,Craig Reynolds,11,58.0,59.8
+2024,Isaiah Davis,22,76.6,73.8
+2024,Pierre Strong Jr.,8,71.3,48.5
+2024,Julius Chestnut,31,73.0,53.8
+2024,Jeff Wilson Jr.,17,59.0,52.0
+2024,Terrell Jennings,19,53.7,52.3
+2024,Sione Vaki,11,60.1,81.7
+2024,Rashid Shaheed,20,66.1,69.2
+2024,Aaron Shampklin,25,52.1,51.8
+2024,Tucker Kraft,12,82.1,71.0
+2024,Chris Collier,23,52.0,58.5
+2024,Ashton Dulin,14,69.1,55.6
+2024,Christian Watson,12,61.8,71.3
+2024,Xavier Smith,26,69.2,67.9
+2024,Steven Sims,3,59.5,55.7
+2024,Cooper Kupp,26,58.6,72.3
+2024,Kalif Raymond,11,59.5,70.8
+2024,Tyreik McAllister,23,62.4,59.1
+2024,Kameron Johnson,30,62.5,44.6
+2024,Laviska Shenault Jr.,27,56.6,60.3
+2024,Dylan Laube,23,39.9,59.1
+2024,Kevin Austin Jr.,20,63.1,57.6
+2024,Jermaine Jackson,20,59.2,
+2024,Tanner Hudson,7,62.6,66.8
+2024,Xavier Gipson,22,62.7,49.9
+2024,Kendrick Bourne,19,62.0,62.7
+2024,David Moore,5,56.2,64.0
