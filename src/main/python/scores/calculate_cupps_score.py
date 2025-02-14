@@ -39,32 +39,72 @@ def scale_to_100(value, max_expected):
 def percentile_75(values, default):
     return float(np.percentile(values, 75)) if values else float(default)
 
-def calculate_draft_cap_weight(draft_cap):
+def calculate_draft_cap_weight(draft_cap, position):
     """ Calculates draft capital weighting with penalties for later picks. """
     if draft_cap is None:
         return 0  # Undrafted players get no draft score
 
-    if draft_cap <= 10:
-        return 100
-    elif draft_cap <= 32:
-        return 90 - ((draft_cap - 10) * 1.5)
-    elif draft_cap <= 64:
-        return 85 - ((draft_cap - 32) * 1.2)
-    elif draft_cap <= 100:
-        return 70 - ((draft_cap - 60) * 1.0)
-    elif draft_cap <= 150:
-        return 40 - ((draft_cap - 100) * 0.8)
-    elif draft_cap <= 200:
-        return 20 - ((draft_cap - 150) * 0.6)
+    if position == "RB":
+
+        if draft_cap <= 10:
+            return 100
+        elif draft_cap <= 32:
+            return 90 - ((draft_cap - 10) * 1.5)
+        elif draft_cap <= 64:
+            return 85 - ((draft_cap - 32) * 1.2)
+        elif draft_cap <= 100:
+            return 70 - ((draft_cap - 60) * 1.0)
+        elif draft_cap <= 150:
+            return 40 - ((draft_cap - 100) * 0.8)
+        elif draft_cap <= 200:
+            return 20 - ((draft_cap - 150) * 0.6)
+        else:
+            return max(5, 10 - ((draft_cap - 200) * 0.4))  # Harshest penalty
+        
+    elif position == "WR":
+
+        if draft_cap <= 5:
+            return 100
+        elif draft_cap <= 15:
+            return 90 - ((draft_cap - 10) * 1.5)
+        elif draft_cap <= 32:
+            return 85 - ((draft_cap - 32) * 1.25)
+        elif draft_cap <= 64:
+            return 70 - ((draft_cap - 60) * 1.0)
+        elif draft_cap <= 100:
+            return 40 - ((draft_cap - 100) * 0.8)
+        elif draft_cap <= 200:
+            return 20 - ((draft_cap - 150) * 0.6)
+        else:
+            return max(5, 10 - ((draft_cap - 200) * 0.4))  # Harshest penalty
+        
+    elif position == "TE":
+
+        if draft_cap <= 10:
+            return 100
+        elif draft_cap <= 32:
+            return 90 - ((draft_cap - 10) * 1.5)
+        elif draft_cap <= 64:
+            return 85 - ((draft_cap - 32) * 1.2)
+        elif draft_cap <= 100:
+            return 70 - ((draft_cap - 60) * 1.0)
+        elif draft_cap <= 150:
+            return 40 - ((draft_cap - 100) * 0.8)
+        elif draft_cap <= 200:
+            return 20 - ((draft_cap - 150) * 0.6)
+        else:
+            return max(5, 10 - ((draft_cap - 200) * 0.4))  # Harshest penalty
+        
     else:
-        return max(5, 10 - ((draft_cap - 200) * 0.4))  # Harshest penalty
+        logging.warn(f"Cannot calculate production score for player with position {position}")
+        return
 
 def calculate_production_score(position, seasons, global_pff_averages):
     """ Calculates a player's production score based on counting stats and PFF grades. """
     if not seasons:
         return 0
 
-    total_scrim_ypg, total_fppg, peak_fppg, peak_pff_run, peak_pff_rec, peak_yprr, peak_tprr = 0, 0, 0, 0, 0, 0, 0
+    total_scrim_ypg, total_fppg, peak_fppg, peak_pff_run, peak_pff_rec, peak_yprr, peak_tprr, peak_rec_yds, peak_season_age = 0, 0, 0, 0, 0, 0, 0, 0, 0
     pff_run_values, pff_rec_values, yprr_values, tprr_values = [], [], [], []
     valid_seasons = 0
 
@@ -87,7 +127,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
                 peak_pff_run = pff_run
             pff_run_values.append(pff_run)
 
-        if rec > 10:
+        if rec > 25:
             if pff_rec > peak_pff_rec:
                 peak_pff_rec = pff_rec
             if yprr > peak_yprr:
@@ -98,8 +138,12 @@ def calculate_production_score(position, seasons, global_pff_averages):
             yprr_values.append(yprr)
             tprr_values.append(tprr)
 
+            if rec_yds > peak_rec_yds:
+                peak_rec_yds = rec_yds
+                peak_season_age = season_age
+
         # ✅ Apply Age-Based Adjustments
-        age_adjustments = {18: 1.20, 19: 1.15, 20: 1.10, 21: 0.90, 22: 0.80, 23: 0.70}
+        age_adjustments = {18: 1.35, 19: 1.30, 20: 1.25, 21: 0.9, 22: 0.80, 23: 0.70}
         if season_age is None:
             age_multiplier = 1  # Default multiplier if `season_age` is missing
         else:
@@ -114,6 +158,10 @@ def calculate_production_score(position, seasons, global_pff_averages):
 
         if fppg > peak_fppg:
             peak_fppg = fppg
+        
+        big_rec_szn_boost = 0
+        if peak_rec_yds > 1200:
+            big_rec_szn_boost = math.log(peak_rec_yds - 1199) * 15
 
         valid_seasons += 1
 
@@ -150,9 +198,10 @@ def calculate_production_score(position, seasons, global_pff_averages):
             (yprr_75 * 30) + 
             (peak_yprr * 30) +
             (tprr_75 / 0.005) +
-            (peak_tprr / 0.005)
+            (peak_tprr / 0.005) + 
+            (big_rec_szn_boost)
         )
-        max_expected_score = 1800
+        max_expected_score = 2200
 
     elif position == "TE":
         raw_production_score = (
@@ -292,7 +341,7 @@ def update_cupps_scores(db_util):
 
         production_score = calculate_production_score(position, data["seasons"], global_pff_averages)
         size_score = calculate_size_score(position, height, weight, ras)
-        draft_cap_weighted = calculate_draft_cap_weight(draft_cap)
+        draft_cap_weighted = calculate_draft_cap_weight(draft_cap, position)
         cupps_score = scale_to_100((production_score * 2) + (size_score * 1) + (draft_cap_weighted * 3), 600)
 
         logging.info(f"📊 Player {player_id} Scores 📊 Production: {production_score} -- Size: {size_score} -- DC: {draft_cap_weighted} -- Overall CUPPS: {cupps_score}")
