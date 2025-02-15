@@ -31,6 +31,47 @@ def get_global_pff_averages(db_util):
     logging.info(f"✅ Global PFF Averages: {averages}")
     return averages
 
+def get_age_multiplier(position, season_age):
+    """Returns the age multiplier based on position and season age."""
+
+    if not season_age:
+        return 1
+    
+    # Define age adjustment multipliers for each position
+    age_adjustments = {
+        "RB": {18: 1.35, 19: 1.30, 20: 1.25, 21: 0.90, 22: 0.80, 23: 0.70, 24: 0.60},
+        "WR": {18: 1.50, 19: 1.40, 20: 1.30, 21: 0.80, 22: 0.70, 23: 0.60, 24: 0.50},
+        "TE": {18: 1.20, 19: 1.15, 20: 1.10, 21: 1, 22: 0.95, 23: 0.85, 24: 0.80},
+    }
+
+    # Get position-specific age multipliers or use default (if position not in dict)
+    position_age_adjustments = age_adjustments.get(position, {})
+
+    # Return the position-specific multiplier or a default value (1 for neutral impact)
+    return position_age_adjustments.get(season_age, 0.50 if season_age >= 25 else 1)
+
+def is_valid_season(position, touches):
+    """
+    Determines if a player's season is valid based on the number of touches.
+    
+    :param position: The player's position (e.g., 'RB', 'WR', 'TE').
+    :param touches: The number of rush attempts (RB) or receptions (WR/TE) in that season.
+    :return: True if the season meets the minimum threshold, False otherwise.
+    """
+
+    # ✅ Define position-specific thresholds
+    touch_thresholds = {
+        "RB": 20,   # Minimum rush attempts for a valid RB season
+        "WR": 5,   # Minimum receptions for a valid WR season
+        "TE": 5,   # Minimum receptions for a valid TE season
+    }
+
+    # ✅ Get threshold for the given position, default to 0 if not listed
+    required_touches = touch_thresholds.get(position, 0)
+
+    # ✅ Return True if touches meet or exceed the threshold, else False
+    return touches >= required_touches
+
 def scale_to_100(value, max_expected):
     """ Scales a value to be out of 100 using a predefined max range. """
     return min(100, (value / max_expected) * 100)
@@ -83,15 +124,15 @@ def calculate_draft_cap_weight(draft_cap, position):
         if draft_cap <= 10:
             return 100
         elif draft_cap <= 32:
-            return 90 - ((draft_cap - 10) * 1.5)
+            return 95 - ((draft_cap - 10) * 1.2)
         elif draft_cap <= 64:
-            return 85 - ((draft_cap - 32) * 1.2)
+            return 90 - ((draft_cap - 32) * 0.75)
         elif draft_cap <= 100:
-            return 70 - ((draft_cap - 60) * 1.0)
+            return 80 - ((draft_cap - 60) * 0.65)
         elif draft_cap <= 150:
-            return 40 - ((draft_cap - 100) * 0.8)
+            return 60 - ((draft_cap - 100) * 0.55)
         elif draft_cap <= 200:
-            return 20 - ((draft_cap - 150) * 0.6)
+            return 40 - ((draft_cap - 150) * 0.45)
         else:
             return max(5, 10 - ((draft_cap - 200) * 0.4))  # Harshest penalty
         
@@ -104,22 +145,28 @@ def calculate_production_score(position, seasons, global_pff_averages):
     if not seasons:
         return 0
 
-    total_scrim_ypg, total_fppg, peak_fppg, peak_pff_run, peak_pff_rec, peak_yprr, peak_tprr, peak_rec_yds, peak_season_age = 0, 0, 0, 0, 0, 0, 0, 0, 0
+    total_scrim_ypg, total_fppg, peak_fppg, peak_pff_run, peak_pff_rec, peak_yprr, peak_tprr, peak_rec_yds, peak_team_yards_market_share, peak_season_age = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     pff_run_values, pff_rec_values, yprr_values, tprr_values = [], [], [], []
     valid_seasons = 0
 
     for season in seasons:
         (year, games_played, scrim_ypg, fppg, pff_run, pff_rec, yprr, tprr,
-         rec_yds, rec, rush_att, rush_yds, team_sos, season_age) = season
+         rec_yds, rec, rush_att, rush_yds, team_sos, season_age, team_yards_market_share) = season
 
         if not games_played or games_played == 0:
             continue
 
-        # ✅ Use global PFF averages if missing
-        pff_run = pff_run if pff_run is not None else global_pff_averages["pff_run"]
-        pff_rec = pff_rec if pff_rec is not None else global_pff_averages["pff_rec"]
-        yprr = yprr if yprr is not None else global_pff_averages["yprr"]
-        tprr = tprr if tprr is not None else global_pff_averages["tprr"]
+        scrim_ypg = float(scrim_ypg or 0)
+        fppg = float(fppg or 0)
+        pff_run = float(pff_run or global_pff_averages["pff_run"])
+        pff_rec = float(pff_rec or global_pff_averages["pff_rec"])
+        yprr = float(yprr or global_pff_averages["yprr"])
+        tprr = float(tprr or global_pff_averages["tprr"])
+        rec_yds = float(rec_yds or 0)
+        rush_att = float(rush_att or 0)
+        rec = float(rec or 0)
+        team_sos = float(team_sos or 0)
+        team_yards_market_share = float(team_yards_market_share or 0)
 
         # ✅ Store PFF metrics, only doing so if a player is over a certain involvement threshold
         if rush_att > 20:
@@ -127,7 +174,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
                 peak_pff_run = pff_run
             pff_run_values.append(pff_run)
 
-        if rec > 25:
+        if rec > 10:
             if pff_rec > peak_pff_rec:
                 peak_pff_rec = pff_rec
             if yprr > peak_yprr:
@@ -140,14 +187,13 @@ def calculate_production_score(position, seasons, global_pff_averages):
 
             if rec_yds > peak_rec_yds:
                 peak_rec_yds = rec_yds
-                peak_season_age = season_age
+                if season_age:
+                    peak_season_age = season_age
+                else:
+                    peak_season_age = 21
 
         # ✅ Apply Age-Based Adjustments
-        age_adjustments = {18: 1.35, 19: 1.30, 20: 1.25, 21: 0.9, 22: 0.80, 23: 0.70}
-        if season_age is None:
-            age_multiplier = 1  # Default multiplier if `season_age` is missing
-        else:
-            age_multiplier = age_adjustments.get(season_age, 0.50 if season_age >= 24 else 1)
+        age_multiplier = get_age_multiplier(position, season_age)
 
         # ✅ Apply SOS Factor
         sos_multiplier = 1 + (math.tanh(team_sos / 15)) if team_sos is not None else 1
@@ -159,11 +205,11 @@ def calculate_production_score(position, seasons, global_pff_averages):
         if fppg > peak_fppg:
             peak_fppg = fppg
         
-        big_rec_szn_boost = 0
-        if peak_rec_yds > 1200:
-            big_rec_szn_boost = math.log(peak_rec_yds - 1199) * 15
-
-        valid_seasons += 1
+        if team_yards_market_share > peak_team_yards_market_share:
+            peak_team_yards_market_share = team_yards_market_share
+        
+        if is_valid_season(position, rec if position in ['TE', 'WR'] else rush_att):
+            valid_seasons += 1
 
     if valid_seasons == 0:
         return 0
@@ -185,23 +231,27 @@ def calculate_production_score(position, seasons, global_pff_averages):
             (yprr_75 * 30) + 
             (tprr_75 / 0.002)
         )
-        max_expected_score = 2000 
+        max_expected_score = 2100 
 
     elif position == "WR":
+        # ✅ Increase Peak Receiving Yards Boost - more boost if it was in their first 3 yrs
+        big_rec_szn_boost = (peak_rec_yds - 1100) * (0.4 if peak_season_age <= 20 else 0.2) if peak_rec_yds > 1100 else 0
 
+         # ✅ Adjusted Production Score for WRs
         raw_production_score = (
             ((total_scrim_ypg / valid_seasons) * 2) +
-            ((total_fppg / valid_seasons) * 10) +
-            (peak_fppg * 8) +
-            (pff_rec_75 * 3) +
-            (peak_pff_rec) +
-            (yprr_75 * 30) + 
-            (peak_yprr * 30) +
-            (tprr_75 / 0.005) +
-            (peak_tprr / 0.005) + 
+            ((total_fppg / valid_seasons) * 8) +
+            (peak_fppg * 10) +
+            (pff_rec_75 * 2) +
+            (peak_pff_rec * 2) +
+            (yprr_75 * 30) +
+            (peak_yprr * 50) +
+            (tprr_75 / 0.0045) +
+            (peak_tprr / 0.0015) + 
+            (peak_team_yards_market_share * 80) +
             (big_rec_szn_boost)
         )
-        max_expected_score = 2200
+        max_expected_score = 2300  # Increased slightly to balance scaling
 
     elif position == "TE":
         raw_production_score = (
@@ -215,7 +265,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
             (tprr_75 / 0.0025) +
             (peak_tprr / 0.0025)
         )
-        max_expected_score = 1400
+        max_expected_score = 1500
 
     else:
         logging.warn(f"Cannot calculate production score for player with position {position}")
@@ -240,7 +290,7 @@ def calculate_size_score(position, height, weight, ras):
     # ✅ Define position-specific ideal height & weight ranges
     size_ranges = {
         "RB": {"min_h": 67, "min_w": 190},
-        "WR": {"min_h": 70, "min_w": 180},
+        "WR": {"min_h": 70, "min_w": 190},
         "TE": {"min_h": 75, "min_w": 245},
     }
 
@@ -307,7 +357,7 @@ def update_cupps_scores(db_util):
     db_util.cursor.execute("""
         SELECT p.player_id, p.position, p.height, p.weight, p.birthday, p.draft_cap, p.draft_year, p.ras,
                c.year, c.games_played, c.scrim_ypg, c.fppg, c.pff_run_grade, c.pff_rec_grade, c.yprr, c.tprr,
-               c.rec_yds, c.receptions, c.rush_att, c.rush_yds, COALESCE(t.team_sos, 0), c.season_age
+               c.rec_yds, c.receptions, c.rush_att, c.rush_yds, COALESCE(t.team_sos, 0), c.season_age, c.team_yards_market_share
         FROM player p
         JOIN cfb_player_year_stats c ON p.player_id = c.player_id
         LEFT JOIN team_year_stats t ON c.team_id = t.team_id AND c.year = t.year
