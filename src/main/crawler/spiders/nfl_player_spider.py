@@ -2,7 +2,7 @@ import os
 import logging
 import scrapy
 import csv
-from ....util.db_util import DatabaseUtility
+from ..util.db_util import DatabaseUtility
 from ..util.crawler_util import *
 
 class NFLPlayerSpider(scrapy.Spider):

@@ -1,6 +1,6 @@
 import scrapy
 import logging
-from ....util.db_util import DatabaseUtility
+from ..util.db_util import DatabaseUtility
 from urllib.parse import quote_plus
 from ..util.crawler_util import get_custom_settings
 
@@ -9,7 +9,7 @@ class SchoolYearStatsSpider(scrapy.Spider):
     custom_settings = get_custom_settings()
 
     # Define the years to iterate over
-    start_year = 2024
+    start_year = 2001
     end_year = 2024
 
     def __init__(self, *args, **kwargs):
@@ -53,10 +53,14 @@ class SchoolYearStatsSpider(scrapy.Spider):
 
         # Extract the team SOS value
         team_sos = response.xpath('//p/a/strong[text()="SOS"]/parent::a/parent::p/text()').re_first(r':\s([-+]?\d*\.?\d+)')
+        team_srs = response.xpath('//p/a/strong[text()="SRS"]/parent::a/parent::p/text()').re_first(r':\s([-+]?\d*\.?\d+)')
+
 
         if team_sos is None:
             logging.warning(f"SOS value not found for {response.url}, skipping.")
             return
+        if team_srs is None:
+            logging.warning(f"SRS value not found for {response.url}, skipping.")
 
         try:
             # Check if the row already exists
@@ -72,16 +76,16 @@ class SchoolYearStatsSpider(scrapy.Spider):
                 # Update the existing row
                 self.db_util.cursor.execute("""
                     UPDATE team_year_stats
-                    SET team_sos = %s
+                    SET team_sos = %s, team_srs = %s
                     WHERE team_id = %s AND year = %s
-                """, (team_sos, team_id, year))
-                logging.info(f"Updated team SOS for team_id {team_id} in year {year}")
+                """, (team_sos, team_srs, team_id, year))
+                logging.info(f"Updated team SOS/SRS for team_id {team_id} in year {year}")
             else:
                 # Insert a new row
                 self.db_util.cursor.execute("""
-                    INSERT INTO team_year_stats (team_id, year, team_sos)
-                    VALUES (%s, %s, %s)
-                """, (team_id, year, team_sos))
+                    INSERT INTO team_year_stats (team_id, year, team_sos, team_srs)
+                    VALUES (%s, %s, %s, %s)
+                """, (team_id, year, team_sos, team_srs))
                 logging.info(f"Inserted new team SOS for team_id {team_id} in year {year}")
 
             # Commit the changes

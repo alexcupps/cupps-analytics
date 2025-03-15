@@ -1,7 +1,7 @@
 import os
 import scrapy
 import mysql.connector
-from ....util.db_util import DatabaseUtility
+from ..util.db_util import DatabaseUtility
 from ..util.crawler_util import get_custom_settings
 
 class SchoolSpider(scrapy.Spider):

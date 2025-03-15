@@ -1,6 +1,6 @@
 import scrapy
 import logging
-from ....util.db_util import DatabaseUtility
+from ..util.db_util import DatabaseUtility
 from ..util.crawler_util import *
 from urllib.parse import quote_plus
 import re

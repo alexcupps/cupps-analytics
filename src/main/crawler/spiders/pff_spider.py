@@ -2,7 +2,7 @@ import os
 import csv
 import logging
 import scrapy
-from ....util.db_util import DatabaseUtility
+from ..util.db_util import DatabaseUtility
 from ..util.crawler_util import *
 import json
 

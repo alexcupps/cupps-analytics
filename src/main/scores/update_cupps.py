@@ -5,7 +5,7 @@ import os
 # Add "src/main/python" to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from util.db_util import DatabaseUtility  # Absolute import
+from main.util.db_util import DatabaseUtility
 from calculate_cupps_score import update_cupps_scores  # Direct import
 
 if __name__ == "__main__":
