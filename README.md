@@ -14,3 +14,6 @@ Note ^ These steps can all be run BEFORE the NFL combine and draft. After the co
 6. Go to ras.football and download the CSV reports for WR, RB and TE from the needed draft year(s). Add these reports to the correct /data folders and follow the existing naming convention.
 7. Run the ras_spider - this parses through the CSV files we have in our /data folder and updates the player rows with their RAS score from the combine.
 8. Run the draft_spider - this parses through all draft selections for the specified year(s) and updates the player rows with the necessary data (draft year, draft pick, height/weight, birthday, etc.)
+9. Re-run the update_season_age SQL in /src/main/sql/update_season_ages.sql 
+10. Run the CUPPS Score calculations and determine the scores of the players in the most recent draft class
+11. Plug the newest draft class into the model data as the test set, and see what the ML models spit out for predicted FPPG in the NFL
