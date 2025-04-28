@@ -11,7 +11,7 @@ class DraftSpider(scrapy.Spider):
     custom_settings = get_custom_settings()
 
     # Define the years to iterate over
-    years = list(range(2024, 2024 + 1))  # From 2000 to 2023 inclusive
+    years = list(range(2025, 2025 + 1))
 
     def __init__(self, *args, **kwargs):
         super(DraftSpider, self).__init__(*args, **kwargs)
@@ -71,8 +71,8 @@ class DraftSpider(scrapy.Spider):
 
             # Search for the player in the database by name and SR ID
             self.db_util.cursor.execute("""
-                SELECT * FROM player WHERE name = %s AND sr_id = %s
-            """, (player_name, sr_id))
+                SELECT * FROM player WHERE sr_id = %s
+            """, (sr_id,))
             player_row = self.db_util.cursor.fetchone()
 
             if not player_row:
@@ -85,25 +85,23 @@ class DraftSpider(scrapy.Spider):
 
                 # Retrieve the newly added player row
                 self.db_util.cursor.execute("""
-                    SELECT * FROM player WHERE name = %s AND sr_id = %s
-                """, (player_name, sr_id))
+                    SELECT * FROM player WHERE sr_id = %s
+                """, (sr_id,))
                 player_row = self.db_util.cursor.fetchone()
 
             # Set draft_cap, height, weight, and birthday fields if not already present
             player_id = player_row['player_id']
-            height = player_row.get('height')
-            weight = player_row.get('weight')
             height_val = None
             weight_val = None
             birthday = None
-            if not height:
-                height_text = response.xpath('//div[@id="info"]//p/span[contains(text(), "-")]/text()').get()
-                height_val = convert_height(height_text)
-            if not weight:
-                weight_text = response.xpath('//div[@id="info"]//p/span[contains(text(), "lb")]/text()').get()
-                weight_val = convert_weight(weight_text)
+            height_text = response.xpath('//div[@id="info"]//p/span[contains(text(), "-")]/text()').get()
+            height_val = convert_height(height_text) if height_text else None
+
+            weight_text = response.xpath('//div[@id="info"]//p/span[contains(text(), "lb")]/text()').get()
+            weight_val = convert_weight(weight_text) if weight_text else None
+
             birthdate_text = response.xpath('//span[@id="necro-birth"]/@data-birth').get()
-            birthday = convert_date(birthdate_text, datetime)
+            birthday = convert_date(birthdate_text, datetime) if birthdate_text else None
 
             update_player(self, 
                           player_id=player_id, 
