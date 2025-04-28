@@ -52,6 +52,43 @@ def get_global_pff_averages(db_util):
 
     return global_averages
 
+def get_global_ras_averages(db_util):
+    """
+    Fetches global RAS averages bucketed by position and draft_cap (expected draft value).
+    """
+    logging.info("🔍 Fetching RAS averages by draft bucket...")
+
+    positions = ["RB", "WR", "TE"]
+    buckets = {
+        "elite": (0, 10),
+        "day_1": (10, 32),
+        "day_2": (32, 100),
+        "day_3": (100, 300)
+    }
+
+    ras_averages = {}
+
+    for position in positions:
+        ras_averages[position] = {}
+        for bucket_name, (low, high) in buckets.items():
+            query = """
+                SELECT AVG(ras) AS avg_ras
+                FROM player
+                WHERE position = %s
+                  AND ras IS NOT NULL
+                  AND draft_cap >= %s
+                  AND draft_cap < %s
+            """
+            db_util.cursor.execute(query, (position, low, high))
+            result = db_util.cursor.fetchone()
+
+            ras_averages[position][bucket_name] = result[0] if result and result[0] is not None else 5.0  # Default to 5.0
+            logging.info(f"✅ Avg RAS for {position} ({bucket_name}): {ras_averages[position][bucket_name]:.2f}")
+
+    return ras_averages
+
+
+
 def get_age_multiplier(position, season_age):
     """Returns the age multiplier based on position and season age."""
 
@@ -310,56 +347,47 @@ def calculate_production_score(position, seasons, global_pff_averages):
     # ✅ Adjust max_expected based on observed values
     return scaled_score
 
-def calculate_size_score(position, height, weight, ras):
-    """ 
-    Calculates a player's size/athleticism score using position-specific height, weight, and RAS. 
-    Players who do not test for RAS will have their size score based entirely on height/weight.
-    """
+def calculate_size_score(position, height, weight, ras, draft_cap=None, ras_averages_by_bucket=None):
+    """Calculates size/athleticism score with RAS bucket logic if RAS is missing."""
 
     if height is None or weight is None:
-        return 0  # Missing critical data
+        return 0
 
-    size_score = 0
-
-    # ✅ Define position-specific ideal height & weight ranges
+    # Size scoring (same as before)
     size_ranges = {
         "RB": {"min_h": 67, "min_w": 190},
         "WR": {"min_h": 70, "min_w": 190},
         "TE": {"min_h": 75, "min_w": 245},
     }
 
-    # ✅ Assign position-specific size thresholds
     if position in size_ranges:
         size_params = size_ranges[position]
-        
-        # 🏆 Height Scoring (0-50 points)
-        if height < size_params["min_h"]:
-            height_score = max(0, 50 - (size_params["min_h"] - height) * 6)  # Penalize for being too short
-        else:
-            height_score = 50  # Ideal range gets full points
-        
-        # 🏆 Weight Scoring (0-50 points)
-        if weight < size_params["min_w"]:
-            weight_score = max(0, 50 - (size_params["min_w"] - weight) * 3)  # Penalize for being underweight
-        else:
-            weight_score = 50  # Ideal range gets full points
-
-        size_score = height_score + weight_score  # Max of 100 points from height + weight
-
+        height_score = 50 if height >= size_params["min_h"] else max(0, 50 - (size_params["min_h"] - height) * 6)
+        weight_score = 50 if weight >= size_params["min_w"] else max(0, 50 - (size_params["min_w"] - weight) * 3)
+        size_score = height_score + weight_score
     else:
-        # Default case if position is missing or new
         size_score = (height * 0.5) + (weight * 0.2)
 
-    # ✅ If RAS is provided, adjust weightings
-    if ras is not None:
-        ras_score = ras * 10  # Convert RAS to a 100-point scale
-        final_score = (ras_score * 0.75) + (size_score * 0.25)  # 75% RAS, 25% Size
-    else:
-        final_score = size_score  # 100% based on size if no RAS
+    # If missing RAS, select bucketed average based on draft_cap
+    if ras is None and ras_averages_by_bucket is not None and position in ras_averages_by_bucket:
+        if draft_cap is not None:
+            if draft_cap < 11:
+                ras = ras_averages_by_bucket[position]["elite"]
+            elif draft_cap < 33:
+                ras = ras_averages_by_bucket[position]["day_1"]
+            elif draft_cap < 101:
+                ras = ras_averages_by_bucket[position]["day_2"]
+            else:
+                ras = ras_averages_by_bucket[position]["day_3"]
+        else:
+            ras = 7
 
-    return scale_to_100(final_score, max_expected=100)
+    ras_score = (ras * 10) if ras is not None else 70
+    final_score = (ras_score * 0.8) + (size_score * 0.2)
 
+    print(f"Before scaling: size_score: {size_score}, ras_score: {ras_score}, final_score: {final_score}")
 
+    return final_score
 
 def update_cupps_scores(db_util):
     """ 
@@ -400,6 +428,7 @@ def update_cupps_scores(db_util):
 
     # ✅ Fetch global PFF averages
     global_pff_averages = get_global_pff_averages(db_util)
+    global_ras_averages = get_global_ras_averages(db_util)
 
     # ✅ Fetch all necessary player data in bulk
     logging.info("🔍 Fetching player and season data...")
@@ -436,10 +465,9 @@ def update_cupps_scores(db_util):
         # ✅ Use default values for missing data
         height = height or 72  # Default 6'0"
         weight = weight or 210  # Default 210 lbs
-        ras = ras if ras is not None else 5  # Default RAS
 
         production_score = calculate_production_score(position, data["seasons"], global_pff_averages)
-        size_score = calculate_size_score(position, height, weight, ras)
+        size_score = calculate_size_score(position, height, weight, ras, draft_cap, ras_averages_by_bucket=global_ras_averages)
         draft_cap_weighted = calculate_draft_cap_weight(draft_cap, position)
         cupps_score = scale_to_100((production_score * 2.25) + (size_score * 1) + (draft_cap_weighted * 2.75), 600)
 
