@@ -4,6 +4,7 @@ SELECT
     p.name,
     p.position,
     p.draft_cap,
+    p.draft_year,
     p.production_score,
     p.size_score,
     p.cupps_score,
@@ -82,9 +83,11 @@ GROUP BY
     p.name,
     p.position,
     p.draft_cap,
+    p.draft_year,
     p.production_score,
     p.size_score,
     p.cupps_score,
     p.ras,
     p.height,
     p.weight;
+
