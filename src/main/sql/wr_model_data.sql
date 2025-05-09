@@ -2,15 +2,11 @@ CREATE OR REPLACE VIEW wr_model_data AS
 SELECT
     p.player_id,
     p.name,
-    p.position,
     p.draft_cap,
     p.draft_year,
     p.production_score,
     p.size_score,
     p.cupps_score,
-    p.ras,
-    p.height,
-    p.weight,
     
     -- College performance metrics
     ROUND(AVG(c.fppg), 2) AS avg_fppg_college,
@@ -41,17 +37,36 @@ SELECT
     WHERE c2.player_id = p.player_id
     ORDER BY (c2.rush_yds + c2.rec_yds) DESC
     LIMIT 1) AS peak_season_age_college,
-
     
+    -- Early breakout (true if peak season age ≤ 20)
+	(CASE 
+		WHEN (SELECT c2.season_age 
+			  FROM cfb_player_year_stats c2 
+			  WHERE c2.player_id = p.player_id
+			  ORDER BY (c2.rush_yds + c2.rec_yds) DESC
+			  LIMIT 1) <= 20
+		THEN TRUE
+		ELSE FALSE
+	 END) AS early_breakout,
+
     -- Average Team SOS across all seasons in college for a player
     ROUND(AVG(ts.team_sos), 2) AS avg_sos,
     ROUND(MAX(ts.team_sos), 2) AS peak_sos,
     ROUND(AVG(ts.team_srs), 2) AS avg_srs,
     ROUND(MAX(ts.team_srs), 2) AS peak_srs,
     
-    -- Fix for NFL performance metrics
-    ROUND(COALESCE(AVG(n.fppg), 0), 2) AS avg_fppg_nfl,
-    ROUND(COALESCE(SUM(DISTINCT n.fantasy_points), 0), 2) AS total_fantasy_points_nfl
+    -- NFL FPPG of five best seasons
+	(
+	  SELECT ROUND(AVG(top_season.fppg), 2)
+	  FROM (
+		SELECT fppg
+		FROM nfl_player_year_stats n2
+		WHERE n2.player_id = p.player_id
+		  AND n2.games_played >= 10
+		ORDER BY fppg DESC
+		LIMIT 5
+	  ) AS top_season
+	) AS avg_fppg_nfl
 
 FROM player p
 LEFT JOIN cfb_player_year_stats c ON p.player_id = c.player_id
@@ -81,13 +96,8 @@ WHERE
 GROUP BY 
     p.player_id,
     p.name,
-    p.position,
     p.draft_cap,
     p.draft_year,
     p.production_score,
     p.size_score,
-    p.cupps_score,
-    p.ras,
-    p.height,
-    p.weight;
-
+    p.cupps_score;
