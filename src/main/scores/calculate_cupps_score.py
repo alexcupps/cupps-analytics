@@ -99,7 +99,7 @@ def get_age_multiplier(position, season_age):
     age_adjustments = {
         "RB": {18: 1.35, 19: 1.30, 20: 1.25, 21: 0.90, 22: 0.80, 23: 0.70, 24: 0.60},
         "WR": {18: 1.50, 19: 1.40, 20: 1.30, 21: 0.80, 22: 0.70, 23: 0.60, 24: 0.50},
-        "TE": {18: 1.20, 19: 1.15, 20: 1.10, 21: 1, 22: 0.95, 23: 0.85, 24: 0.80},
+        "TE": {18: 1.20, 19: 1.15, 20: 1.10, 21: 1, 22: 0.90, 23: 0.80, 24: 0.70},
     }
 
     # Get position-specific age multipliers or use default (if position not in dict)
@@ -182,7 +182,7 @@ def calculate_draft_cap_weight(draft_cap, position):
         
     elif position == "TE":
 
-        if draft_cap <= 10:
+        if draft_cap <= 15:
             return 100
         elif draft_cap <= 32:
             return 95 - ((draft_cap - 10) * 1.2)
@@ -206,7 +206,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
     if not seasons:
         return 0
 
-    total_scrim_ypg, total_fppg, peak_fppg, peak_pff_run, peak_pff_rec, peak_yprr, peak_tprr, peak_scrim_yds, peak_rec_yds, peak_team_yards_market_share, peak_season_age = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
+    total_scrim_ypg, total_fppg, total_market_share, peak_fppg, peak_pff_run, peak_pff_rec, peak_yprr, peak_tprr, peak_scrim_yds, peak_rec_yds, peak_team_yards_market_share, peak_season_age = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 
     pff_run_values, pff_rec_values, yprr_values, tprr_values = [], [], [], []
     valid_seasons = 0
 
@@ -270,6 +270,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
         # ✅ Accumulate Weighted Stats
         total_scrim_ypg += weight_stats_by_age_and_sos(scrim_ypg or 0, age_multiplier, sos_multiplier)
         total_fppg += weight_stats_by_age_and_sos(fppg or 0, age_multiplier, sos_multiplier)
+        total_market_share += weight_stats_by_age_and_sos(team_yards_market_share or 0, age_multiplier, sos_multiplier)
 
         if weight_stats_by_age_and_sos(fppg, age_multiplier, sos_multiplier) > peak_fppg:
             peak_fppg = weight_stats_by_age_and_sos(fppg, age_multiplier, sos_multiplier)
@@ -322,21 +323,18 @@ def calculate_production_score(position, seasons, global_pff_averages):
             (peak_team_yards_market_share * 150) +
             (big_szn_boost)
         )
-        max_expected_score = 2500  # Increased slightly to balance scaling
+        max_expected_score = 2500
 
     elif position == "TE":
         raw_production_score = (
-            ((total_scrim_ypg / valid_seasons) * 2) +
-            ((total_fppg / valid_seasons) * 10) +
-            (peak_fppg * 8) +
-            (pff_rec_75 * 3) +
-            (peak_pff_rec) +
-            (yprr_75 * 30) + 
-            (peak_yprr * 30) +
-            (tprr_75 / 0.0025) +
-            (peak_tprr / 0.0025)
+            ((total_fppg / valid_seasons) * 10) +                     
+            (peak_fppg * 10) +                      
+            (peak_rec_yds * 0.1) +
+            ((total_scrim_ypg / valid_seasons) * 3) +
+            (peak_team_yards_market_share * 350) +
+            ((total_market_share / valid_seasons)) * 350
         )
-        max_expected_score = 1500
+        max_expected_score = 1200
 
     else:
         logging.warn(f"Cannot calculate production score for player with position {position}")
@@ -357,7 +355,7 @@ def calculate_size_score(position, height, weight, ras, draft_cap=None, ras_aver
     size_ranges = {
         "RB": {"min_h": 67, "min_w": 190},
         "WR": {"min_h": 70, "min_w": 190},
-        "TE": {"min_h": 75, "min_w": 245},
+        "TE": {"min_h": 75, "min_w": 240},
     }
 
     if position in size_ranges:
@@ -371,7 +369,7 @@ def calculate_size_score(position, height, weight, ras, draft_cap=None, ras_aver
     # If missing RAS, select bucketed average based on draft_cap
     if ras is None and ras_averages_by_bucket is not None and position in ras_averages_by_bucket:
         if draft_cap is not None:
-            if draft_cap < 11:
+            if draft_cap < 16:
                 ras = ras_averages_by_bucket[position]["elite"]
             elif draft_cap < 33:
                 ras = ras_averages_by_bucket[position]["day_1"]
@@ -389,94 +387,92 @@ def calculate_size_score(position, height, weight, ras, draft_cap=None, ras_aver
 
     return final_score
 
-def update_cupps_scores(db_util):
+def update_cupps_scores(db_util, positions=None):
     """ 
-    🚀 CUPPS (Calculated Upside Player Prospect Score) calculation with batch updates and logging. 
+    🚀 CUPPS (Calculated Upside Player Prospect Score) calculation with optional position filtering. 
     """
-
     logging.info("🚀 Starting CUPPS score update process...")
 
-    # ✅ Fetch players with NFL seasons since 2016
-    db_util.cursor.execute("""
+    # Build dynamic WHERE clause for positions
+    position_filter = ""
+    position_params = []
+    if positions:
+        placeholders = ",".join(["%s"] * len(positions))
+        position_filter = f"AND p.position IN ({placeholders})"
+        position_params = positions
+
+    # ✅ Fetch player_ids matching the filters
+    db_util.cursor.execute(f"""
         SELECT DISTINCT p.player_id
         FROM player p
         LEFT JOIN cfb_player_year_stats c ON p.player_id = c.player_id
         LEFT JOIN (
-            -- Get the first recorded NFL year for each player
             SELECT player_id, MIN(year) AS first_nfl_year
             FROM nfl_player_year_stats
             GROUP BY player_id
         ) n ON p.player_id = n.player_id
+        WHERE c.player_id IS NOT NULL
+          AND (
+              (p.draft_cap IS NOT NULL AND p.draft_year >= 2013)
+              OR (n.first_nfl_year IS NOT NULL AND n.first_nfl_year >= 2013)
+          )
+          {position_filter}
+    """, position_params)
 
-        WHERE 
-            -- Ensure the player has CFB stats
-            c.player_id IS NOT NULL
-
-            -- Ensure either drafted in 2014+ OR played in the NFL in 2014+
-            AND (
-                p.draft_cap IS NOT NULL AND p.draft_year >= 2014
-                OR (n.first_nfl_year IS NOT NULL AND n.first_nfl_year >= 2014)
-            );
-    """)
     players = [row[0] for row in db_util.cursor.fetchall()]
-
     if not players:
         logging.info("⚠️ No players found to update.")
         return
 
     logging.info(f"🔍 Found {len(players)} players to update.")
 
-    # ✅ Fetch global PFF averages
+    # ✅ Fetch global averages
     global_pff_averages = get_global_pff_averages(db_util)
     global_ras_averages = get_global_ras_averages(db_util)
 
-    # ✅ Fetch all necessary player data in bulk
+    # ✅ Fetch detailed player data
     logging.info("🔍 Fetching player and season data...")
-    db_util.cursor.execute("""
+    db_util.cursor.execute(f"""
         SELECT p.player_id, p.position, p.height, p.weight, p.birthday, p.draft_cap, p.draft_year, p.ras,
                c.year, c.games_played, c.scrim_ypg, c.fppg, c.pff_run_grade, c.pff_rec_grade, c.yprr, c.tprr,
                c.rec_yds, c.receptions, c.rush_att, c.rush_yds, COALESCE(t.team_sos, 0), c.season_age, c.team_yards_market_share
         FROM player p
         JOIN cfb_player_year_stats c ON p.player_id = c.player_id
         LEFT JOIN team_year_stats t ON c.team_id = t.team_id AND c.year = t.year
-        WHERE p.player_id IN ({})
+        WHERE p.player_id IN ({",".join(["%s"] * len(players))})
         ORDER BY p.player_id, c.year
-    """.format(",".join(["%s"] * len(players))), players)
+    """, players)
 
-    # ✅ Group season data by player_id
+    # ✅ Group by player_id
     player_data = {}
     for row in db_util.cursor.fetchall():
         player_id = row[0]
-
         if player_id not in player_data:
             player_data[player_id] = {
-                "player_info": row[1:8],  # Extracts (position, height, weight, birthday, draft_cap, draft_year, ras)
+                "player_info": row[1:8],
                 "seasons": []
             }
-
-        player_data[player_id]["seasons"].append(row[8:])  # Append season stats
+        player_data[player_id]["seasons"].append(row[8:])
 
     logging.info(f"✅ Grouped season data for {len(player_data)} players.")
 
+    # ✅ Compute scores and prepare updates
     update_values = []
     for player_id, data in player_data.items():
         position, height, weight, birthday, draft_cap, draft_year, ras = data["player_info"]
-
-        # ✅ Use default values for missing data
-        height = height or 72  # Default 6'0"
-        weight = weight or 210  # Default 210 lbs
+        height = height or 72
+        weight = weight or 210
 
         production_score = calculate_production_score(position, data["seasons"], global_pff_averages)
-        size_score = calculate_size_score(position, height, weight, ras, draft_cap, ras_averages_by_bucket=global_ras_averages)
+        size_score = calculate_size_score(position, height, weight, ras, draft_cap, global_ras_averages)
         draft_cap_weighted = calculate_draft_cap_weight(draft_cap, position)
         cupps_score = scale_to_100((production_score * 2.25) + (size_score * 1) + (draft_cap_weighted * 2.75), 600)
 
-        logging.info(f"📊 Player {player_id} Scores 📊 Production: {production_score} -- Size: {size_score} -- DC: {draft_cap_weighted} -- Overall CUPPS: {cupps_score}")
+        logging.info(f"📊 Player {player_id} | Prod: {production_score:.2f}, Size: {size_score:.2f}, DraftCap: {draft_cap_weighted:.2f}, CUPPS: {cupps_score:.2f}")
         update_values.append((production_score, size_score, cupps_score, player_id))
 
+    # ✅ Run update
     logging.info(f"🔄 Updating {len(update_values)} players in the database...")
-
-    # ✅ Perform batch update
     db_util.cursor.executemany(
         "UPDATE player SET production_score = %s, size_score = %s, cupps_score = %s WHERE player_id = %s",
         update_values
@@ -484,5 +480,6 @@ def update_cupps_scores(db_util):
     db_util.conn.commit()
 
     logging.info(f"✅ CUPPS scores updated for {len(update_values)} players successfully!")
+
 
 
