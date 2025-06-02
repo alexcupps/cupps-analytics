@@ -1,3 +1,6 @@
 Example command from terminal to execute pff spider for CFB rushing, years 2014-2023:
 
 scrapy crawl pff_spider -a table_name=cfb_player_year_stats -a data_type=rushing -a start_year=2014 -a end_year=2023
+
+Example command to execute update_cupps scores for the TE position only
+python3 update_cupps.py TE
