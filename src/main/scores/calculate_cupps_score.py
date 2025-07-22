@@ -161,7 +161,7 @@ def calculate_draft_cap_weight(draft_cap, position):
         elif draft_cap <= 200:
             return 20 - ((draft_cap - 150) * 0.6)
         else:
-            return max(5, 10 - ((draft_cap - 200) * 0.4))  # Harshest penalty
+            return max(5, 10 - ((draft_cap - 200) * 0.4))
         
     elif position == "WR":
 
@@ -178,7 +178,7 @@ def calculate_draft_cap_weight(draft_cap, position):
         elif draft_cap <= 200:
             return 20 - ((draft_cap - 150) * 0.6)
         else:
-            return max(5, 10 - ((draft_cap - 200) * 0.4))  # Harshest penalty
+            return max(5, 10 - ((draft_cap - 200) * 0.4))
         
     elif position == "TE":
 
@@ -195,7 +195,7 @@ def calculate_draft_cap_weight(draft_cap, position):
         elif draft_cap <= 200:
             return 40 - ((draft_cap - 150) * 0.45)
         else:
-            return max(5, 10 - ((draft_cap - 200) * 0.4))  # Harshest penalty
+            return max(5, 10 - ((draft_cap - 200) * 0.4))
         
     else:
         logging.warn(f"Cannot calculate production score for player with position {position}")
@@ -212,7 +212,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
 
     for season in seasons:
         (year, games_played, scrim_ypg, fppg, pff_run, pff_rec, yprr, tprr,
-         rec_yds, rec, rush_att, rush_yds, team_sos, season_age, team_yards_market_share) = season
+         rec_yds, rec, rush_att, rush_yds, team_sos, team_srs, season_age, team_yards_market_share) = season
 
         if not games_played or games_played == 0:
             continue
@@ -228,6 +228,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
         rush_att = float(rush_att or 0)
         rec = float(rec or 0)
         team_sos = float(team_sos or 0)
+        team_srs = float(team_srs or 0)
         team_yards_market_share = float(team_yards_market_share or 0)
         scrim_yds = rush_yds + rec_yds
 
@@ -261,11 +262,20 @@ def calculate_production_score(position, seasons, global_pff_averages):
                 else:
                     peak_season_age = 21
 
-        # ✅ Get Age-Based Adjustments
+        # Age-Based Adjustments
         age_multiplier = get_age_multiplier(position, season_age)
 
-        # ✅ Get SOS Factor
-        sos_multiplier = 1 + (math.tanh(team_sos / 15)) if team_sos is not None else 1
+
+        # SOS/SRS Production Weighting
+        if team_sos is not None and team_srs is not None:
+            sos_srs_score = (0.5 * team_sos + 0.5 * team_srs)
+            sos_multiplier = 1 + math.tanh(sos_srs_score / 50)
+        elif team_sos is not None:
+            sos_multiplier = 1 + math.tanh(team_sos / 50)
+        elif team_srs is not None:
+            sos_multiplier = 1 + math.tanh(team_srs / 50)
+        else:
+            sos_multiplier = 1
 
         # ✅ Accumulate Weighted Stats
         total_scrim_ypg += weight_stats_by_age_and_sos(scrim_ypg or 0, age_multiplier, sos_multiplier)
@@ -290,7 +300,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
     tprr_75 = percentile_75(tprr_values, global_pff_averages[position]["tprr"])
     
     if position == "RB":
-        big_szn_boost = (peak_scrim_yds - 1200) * (0.6 if peak_season_age <= 20 else 0.2) if peak_scrim_yds > 1100 else 0
+        big_szn_boost = (peak_scrim_yds - 1100) * (0.6 if peak_season_age <= 20 else 0.2) if peak_scrim_yds > 1100 else 0
         raw_production_score = (
             ((total_scrim_ypg / valid_seasons) * 2) +
             ((total_fppg / valid_seasons) * 10) +
@@ -303,7 +313,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
             (tprr_75 / 0.002) + 
             (big_szn_boost)
         )
-        max_expected_score = 3000 
+        max_expected_score = 2800 
 
     elif position == "WR":
         # ✅ Increase Peak Receiving Yards Boost - more boost if it was in their first 3 yrs
@@ -318,7 +328,7 @@ def calculate_production_score(position, seasons, global_pff_averages):
             (peak_pff_rec * 4) +
             (yprr_75 * 30) +
             (peak_yprr * 60) +
-            (tprr_75 / 0.0045) +
+            (tprr_75 / 0.005) +
             (peak_tprr / 0.001) + 
             (peak_team_yards_market_share * 150) +
             (big_szn_boost)
@@ -351,7 +361,7 @@ def calculate_size_score(position, height, weight, ras, draft_cap=None, ras_aver
     if height is None or weight is None:
         return 0
 
-    # Size scoring (same as before)
+    # Size score thresholds
     size_ranges = {
         "RB": {"min_h": 67, "min_w": 190},
         "WR": {"min_h": 70, "min_w": 190},
@@ -435,7 +445,7 @@ def update_cupps_scores(db_util, positions=None):
     db_util.cursor.execute(f"""
         SELECT p.player_id, p.position, p.height, p.weight, p.birthday, p.draft_cap, p.draft_year, p.ras,
                c.year, c.games_played, c.scrim_ypg, c.fppg, c.pff_run_grade, c.pff_rec_grade, c.yprr, c.tprr,
-               c.rec_yds, c.receptions, c.rush_att, c.rush_yds, COALESCE(t.team_sos, 0), c.season_age, c.team_yards_market_share
+               c.rec_yds, c.receptions, c.rush_att, c.rush_yds, COALESCE(t.team_sos, 0), COALESCE(t.team_srs, 0), c.season_age, c.team_yards_market_share
         FROM player p
         JOIN cfb_player_year_stats c ON p.player_id = c.player_id
         LEFT JOIN team_year_stats t ON c.team_id = t.team_id AND c.year = t.year
@@ -466,7 +476,10 @@ def update_cupps_scores(db_util, positions=None):
         production_score = calculate_production_score(position, data["seasons"], global_pff_averages)
         size_score = calculate_size_score(position, height, weight, ras, draft_cap, global_ras_averages)
         draft_cap_weighted = calculate_draft_cap_weight(draft_cap, position)
-        cupps_score = scale_to_100((production_score * 2.25) + (size_score * 1) + (draft_cap_weighted * 2.75), 600)
+        cupps_score = scale_to_100((production_score * 2.25) + 
+                                   (size_score * 1) + 
+                                   (draft_cap_weighted * 2.75), 
+                                   600)
 
         logging.info(f"📊 Player {player_id} | Prod: {production_score:.2f}, Size: {size_score:.2f}, DraftCap: {draft_cap_weighted:.2f}, CUPPS: {cupps_score:.2f}")
         update_values.append((production_score, size_score, cupps_score, player_id))
