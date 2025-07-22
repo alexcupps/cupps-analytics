@@ -1,4 +1,4 @@
-# cfl-data-model
+# CUPPS Scoring System & Predictive Prospect Modeling
 
 <h3>Yearly Data Steps:</h3>
 
